@@ -10,16 +10,16 @@ import java.util.Vector;
 /**
  * Author: Tiago de França Queiroz
  * Date: 21/12/13
- * <p/>
+ *
  * Copyright Tiago de França Queiroz, 2013.
- * <p/>
+ *
  * This file is part of Automata.
- * <p/>
+ *
  * Automata is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p/>
+ *
  * Automata is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -28,15 +28,18 @@ import java.util.Vector;
  * You should have received a copy of the GNU General Public License
  * along with Automata If not, see <http://www.gnu.org/licenses/>.
  */
-public class CountungFigure extends EllipseFigure
+public class CountingFigure
+		extends EllipseFigure
 {
 	Rectangle display_box;
 	static int counter = 0;
 	private int my_number;
+	private boolean state;
 
-	public CountungFigure(boolean state)
+	public CountingFigure(boolean state)
 	{
 		super();
+		this.state = state;
 		my_number = counter++;
 		if(state)
 			setAttribute("FillColor", Color.blue);
@@ -112,5 +115,13 @@ public class CountungFigure extends EllipseFigure
 		Vector<Handle> handles = new Vector<Handle>();
 		handles.addElement(new StateHandler(this));
 		return handles;
+	}
+
+	public String toString()
+	{
+		if(state)
+			return String.format("OneState: %d", my_number);
+		else
+			return String.format("ZeroState: %d", my_number);
 	}
 }

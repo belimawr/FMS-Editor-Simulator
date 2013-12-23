@@ -1,11 +1,8 @@
 package Automata.Tools;
 
-import Automata.Figures.CountingFigure;
-import Automata.Model.FSM_Model;
-import Automata.Model.FSM_Node;
+import CH.ifa.draw.framework.ConnectionFigure;
 import CH.ifa.draw.framework.DrawingView;
-import CH.ifa.draw.framework.Figure;
-import CH.ifa.draw.tool.CreationTool;
+import CH.ifa.draw.tool.ConnectionTool;
 
 /**
  * Author: Tiago de França Queiroz
@@ -13,7 +10,7 @@ import CH.ifa.draw.tool.CreationTool;
  *
  * Copyright Tiago de França Queiroz, 2013.
  *
- * This file is part of Automata
+ * This file is part of Automata.
  *
  * Automata is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,26 +23,12 @@ import CH.ifa.draw.tool.CreationTool;
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Automata If not, see <http://www.gnu.org/licenses/>.
+ * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
-public class StateAdder extends CreationTool
+public class FMS_ConnectionTool extends ConnectionTool
 {
-	public StateAdder(DrawingView view, Figure prototype)
+	public FMS_ConnectionTool(DrawingView view, ConnectionFigure prototype)
 	{
 		super(view, prototype);
-	}
-
-	@Override
-	protected Figure createFigure()
-	{
-//		if(super.g)
-		CountingFigure f = (CountingFigure) super.createFigure();
-		FSM_Node node = new FSM_Node(f);
-
-		FSM_Model model = FSM_Model.getInstance();
-		model.insert(f, node);
-
-		System.out.printf("CreatedFigure: %s\n", (f).toString());
-		return f;
 	}
 }

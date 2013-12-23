@@ -1,11 +1,6 @@
-package Automata.Tools;
+package Automata.Model;
 
 import Automata.Figures.CountingFigure;
-import Automata.Model.FSM_Model;
-import Automata.Model.FSM_Node;
-import CH.ifa.draw.framework.DrawingView;
-import CH.ifa.draw.framework.Figure;
-import CH.ifa.draw.tool.CreationTool;
 
 /**
  * Author: Tiago de França Queiroz
@@ -13,7 +8,7 @@ import CH.ifa.draw.tool.CreationTool;
  *
  * Copyright Tiago de França Queiroz, 2013.
  *
- * This file is part of Automata
+ * This file is part of Automata.
  *
  * Automata is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,26 +21,51 @@ import CH.ifa.draw.tool.CreationTool;
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Automata If not, see <http://www.gnu.org/licenses/>.
+ * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
-public class StateAdder extends CreationTool
+public class FSM_Node
 {
-	public StateAdder(DrawingView view, Figure prototype)
+	FSM_Node zero, one;
+	CountingFigure myFigure;
+
+	public FSM_Node()
 	{
-		super(view, prototype);
+		zero = null;
+		one = null;
+		myFigure = null;
 	}
 
-	@Override
-	protected Figure createFigure()
+	public FSM_Node(CountingFigure figure)
 	{
-//		if(super.g)
-		CountingFigure f = (CountingFigure) super.createFigure();
-		FSM_Node node = new FSM_Node(f);
+		zero = null;
+		one = null;
+		myFigure = figure;
+	}
 
-		FSM_Model model = FSM_Model.getInstance();
-		model.insert(f, node);
+	boolean isValid()
+	{
+		if(zero != null && one != null)
+			return true;
+		return false;
+	}
 
-		System.out.printf("CreatedFigure: %s\n", (f).toString());
-		return f;
+	public FSM_Node getZero()
+	{
+		return zero;
+	}
+
+	public void setZero(FSM_Node zero)
+	{
+		this.zero = zero;
+	}
+
+	public FSM_Node getOne()
+	{
+		return one;
+	}
+
+	public void setOne(FSM_Node one)
+	{
+		this.one = one;
 	}
 }

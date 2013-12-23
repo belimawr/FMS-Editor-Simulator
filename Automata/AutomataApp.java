@@ -1,12 +1,15 @@
 package Automata;
 
-import A_Planet_Simulator.AtmosphereTool;
-import Automata.Figures.CountungFigure;
+import Automata.Figures.CountingFigure;
+import Automata.Figures.OneConnection;
+import Automata.Figures.ZeroConnection;
+import Automata.Tools.OneAdder;
 import Automata.Tools.StartStateTool;
 import Automata.Tools.StateAdder;
 import CH.ifa.draw.application.DrawApplication;
 import CH.ifa.draw.framework.Tool;
 import CH.ifa.draw.palette.ToolButton;
+import CH.ifa.draw.tool.ConnectionTool;
 
 import javax.swing.*;
 
@@ -61,24 +64,24 @@ public class AutomataApp extends DrawApplication
 		super.createTools(palette);
 
 		Tool new_tool;
-		new_tool = new StateAdder(view(), new CountungFigure(true));
-		palette.add(createToolButton(IMAGES + "ELLIPSE", "Add State One", new_tool));
+//		new_tool = new StateAdder(view(), new CountingFigure(true));
+//		palette.add(createToolButton(IMAGES + "ELLIPSE", "Add State One", new_tool));
 
-		new_tool = new StateAdder(view(), new CountungFigure(false));
+		new_tool = new StateAdder(view(), new CountingFigure(false));
 		palette.add(createToolButton(IMAGES + "ELLIPSE", "Add State Zero", new_tool));
 
 		new_tool = new StartStateTool(view());
 		palette.add(createToolButton(IMAGES + "BORDDEC", "Start State", new_tool));
-//		new_tool = null;
 
-//		new_tool = new AtmosphereTool(view());
-//		palette.add(createToolButton(IMAGES + "BORDDEC", "Atmosphere Tool", new_tool));
-//		new_tool = null;
-//
-//		/* TEsts */
-//		new_tool = new ConnectionTool(view(), new LineConnection());
-//		palette.add(createToolButton(IMAGES + "CONN", "Connection Tool", new_tool));
-//		new_tool = null;
+		new_tool = new ConnectionTool(view(), new OneConnection());
+		palette.add(createToolButton(IMAGES + "CONN", "1 Connection", new_tool));
+
+		new_tool = new ConnectionTool(view(), new ZeroConnection());
+		palette.add(createToolButton(IMAGES + "CONN", "1 Connection", new_tool));
+
+		new_tool = new OneAdder(view());
+		palette.add(createToolButton(IMAGES + "ELLIPSE", "New One Adder", new_tool));
+
 	}
 
 	/**
