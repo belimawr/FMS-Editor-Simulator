@@ -1,5 +1,6 @@
 package Automata.Tools;
 
+import Automata.Exceptions.Automata_Exception;
 import Automata.Figures.CountingFigure;
 import Automata.Model.FSM_Model;
 import Automata.Model.FSM_Node;
@@ -9,11 +10,11 @@ import CH.ifa.draw.tool.CreationTool;
 
 /**
  * Author: Tiago de França Queiroz
- * Date: 21/12/13
+ * Date: 23/12/13
  *
  * Copyright Tiago de França Queiroz, 2013.
  *
- * This file is part of Automata
+ * This file is part of Automata.
  *
  * Automata is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,20 +27,31 @@ import CH.ifa.draw.tool.CreationTool;
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Automata If not, see <http://www.gnu.org/licenses/>.
+ * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
-public class StateAdder extends CreationTool
+public class ZeroAdder extends CreationTool
 {
-	public StateAdder(DrawingView view, Figure prototype)
+	/*
+ * This Tool does not use a prototype as I want
+ * to keep track of the number of states created
+ * (to label them) and to do so I need a completely
+ * new object every time a new figure is created.
+ */
+	public ZeroAdder(DrawingView view)
+	{
+		super(view);
+	}
+
+	public ZeroAdder(DrawingView view, Figure prototype)
 	{
 		super(view, prototype);
+		throw new Automata_Exception("Prototype cannot be used!");
 	}
 
 	@Override
 	protected Figure createFigure()
 	{
-//		if(super.g)
-		CountingFigure f = (CountingFigure) super.createFigure();
+		CountingFigure f = new CountingFigure(false);
 		FSM_Node node = new FSM_Node(f);
 
 		FSM_Model model = FSM_Model.getInstance();

@@ -1,11 +1,10 @@
 package Automata;
 
-import Automata.Figures.CountingFigure;
 import Automata.Figures.OneConnection;
 import Automata.Figures.ZeroConnection;
 import Automata.Tools.OneAdder;
 import Automata.Tools.StartStateTool;
-import Automata.Tools.StateAdder;
+import Automata.Tools.ZeroAdder;
 import CH.ifa.draw.application.DrawApplication;
 import CH.ifa.draw.framework.Tool;
 import CH.ifa.draw.palette.ToolButton;
@@ -16,23 +15,23 @@ import javax.swing.*;
 /**
  * Author: Tiago de França Queiroz
  * Date: 21/12/13
- * <p/>
+ *
  * Copyright Tiago de França Queiroz, 2013.
- * <p/>
- * This file is part of Automata.Automata.
- * <p/>
- * Automata.Automata is free software: you can redistribute it and/or modify
+ *
+ * This file is part of Automata.
+ *
+ * Automata is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p/>
- * Automata.Automata is distributed in the hope that it will be useful,
+ *
+ * Automata is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * <p/>
+ *
  * You should have received a copy of the GNU General Public License
- * along with Automata.Automata. If not, see <http://www.gnu.org/licenses/>.
+ * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
 public class AutomataApp extends DrawApplication
 {
@@ -64,11 +63,12 @@ public class AutomataApp extends DrawApplication
 		super.createTools(palette);
 
 		Tool new_tool;
-//		new_tool = new StateAdder(view(), new CountingFigure(true));
-//		palette.add(createToolButton(IMAGES + "ELLIPSE", "Add State One", new_tool));
 
-		new_tool = new StateAdder(view(), new CountingFigure(false));
-		palette.add(createToolButton(IMAGES + "ELLIPSE", "Add State Zero", new_tool));
+		new_tool = new OneAdder(view());
+		palette.add(createToolButton(IMAGES + "ELLIPSE", "New One Adder", new_tool));
+
+		new_tool = new ZeroAdder(view());
+		palette.add(createToolButton(IMAGES + "ELLIPSE", "New Zero Adder", new_tool));
 
 		new_tool = new StartStateTool(view());
 		palette.add(createToolButton(IMAGES + "BORDDEC", "Start State", new_tool));
@@ -78,10 +78,6 @@ public class AutomataApp extends DrawApplication
 
 		new_tool = new ConnectionTool(view(), new ZeroConnection());
 		palette.add(createToolButton(IMAGES + "CONN", "1 Connection", new_tool));
-
-		new_tool = new OneAdder(view());
-		palette.add(createToolButton(IMAGES + "ELLIPSE", "New One Adder", new_tool));
-
 	}
 
 	/**
