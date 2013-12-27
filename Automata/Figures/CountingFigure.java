@@ -120,8 +120,8 @@ public class CountingFigure
 	public String toString()
 	{
 		if(state)
-			return String.format("OneState: %d", my_number);
+			return String.format("%d-OneState", my_number);
 		else
-			return String.format("ZeroState: %d", my_number);
+			return String.format("%d-ZeroState", my_number);
 	}
 }

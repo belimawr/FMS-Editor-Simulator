@@ -68,4 +68,16 @@ public class FSM_Node
 	{
 		this.one = one;
 	}
+
+	public String toString()
+	{
+		if(zero != null && one != null)
+			return String.format("\"%s\": 0:{%s}, 1:{%s}", myFigure, zero.myFigure, one.myFigure);
+		else if(zero == null && one != null)
+			return String.format("\"%s\": 0:{%s}, 1:{%s}", myFigure, zero, one.myFigure);
+		else if(zero != null && one == null)
+			return String.format("\"%s\": 0:{%s}, 1:{%s}", myFigure, zero.myFigure, one);
+		else
+			return String.format("\"%s\": 0:{%s}, 1:{%s}", myFigure, zero, one);
+	}
 }

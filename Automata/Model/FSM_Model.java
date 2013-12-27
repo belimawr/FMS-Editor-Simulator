@@ -73,6 +73,7 @@ public class FSM_Model
 
 		nstart.setOne(nend);
 
+		System.out.printf("1: \"%s\"->\"%s\"", start, end);
 		return true;
 	}
 
@@ -85,6 +86,7 @@ public class FSM_Model
 
 		nstart.setZero(nend);
 
+		System.out.printf("1: \"%s\"->\"%s\"", start, end);
 		return true;
 	}
 
@@ -108,5 +110,17 @@ public class FSM_Model
 	public static FSM_Model getInstance()
 	{
 		return me;
+	}
+
+	public void print_debug()
+	{
+		int i = 0;
+		Collection<FSM_Node> my_nodes = nodes.values();
+
+
+		for(FSM_Node n: my_nodes)
+				System.out.printf("[%2d] - %s\n", i++, n);
+
+		System.out.printf("I am valid: %s", isValid());
 	}
 }

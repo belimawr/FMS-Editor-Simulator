@@ -42,23 +42,33 @@ public class OneAdder extends CreationTool
 		super(view);
 	}
 
+	/*
+	 * Just to be sure that this method is never
+	 * going to be used.
+	 */
 	public OneAdder(DrawingView view, Figure prototype)
 	{
 		super(view, prototype);
 		throw new Automata_Exception("Prototype cannot be used!");
 	}
 
+	/*
+	 * Creates the figure and adds it to
+	 * the data structure.
+	 */
 	@Override
 	protected Figure createFigure()
 	{
-//		CountingFigure f = (CountingFigure) super.createFigure();
 		CountingFigure f = new CountingFigure(true);
 		FSM_Node node = new FSM_Node(f);
 
 		FSM_Model model = FSM_Model.getInstance();
 		model.insert(f, node);
 
-		System.out.printf("CreatedFigure: %s\n", (f).toString());
+		/* DEBUG MESSAGE */
+		System.out.printf("\n");
+		FSM_Model.getInstance().print_debug();
+//		System.out.printf("CreatedFigure: %s\n", (f).toString());
 		return f;
 	}
 }

@@ -37,17 +37,17 @@ public class ZeroConnection extends LineConnection
 	}
 
 	/*
- * This method is called by JHD whenever an
- * connection is made.
- *
- * I use this to add connections to the model
- * data structure
- */
+     * This method is called by JHD whenever an
+     * connection is made.
+     *
+     * I use this to add connections to the model
+     * data structure
+     */
 	@Override
 	protected void handleConnect(Figure start, Figure end)
 	{
 		super.handleConnect(start, end);
-		System.out.printf("0-handleConnect: %s, %s\n", start, end);
+//		System.out.printf("0-handleConnect: %s, %s\n", start, end);
 
 		FSM_Model model = FSM_Model.getInstance();
 
@@ -65,7 +65,7 @@ public class ZeroConnection extends LineConnection
 	protected void handleDisconnect(Figure start, Figure end)
 	{
 		super.handleDisconnect(start, end);
-		System.out.printf("0-handleDisconnect : %s, %s\n", start, end);
+//		System.out.printf("0-handleDisconnect : %s, %s\n", start, end);
 	}
 
 	public String toString()

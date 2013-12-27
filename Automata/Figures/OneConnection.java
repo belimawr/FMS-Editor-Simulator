@@ -47,7 +47,7 @@ public class OneConnection extends LineConnection
 	protected void handleConnect(Figure start, Figure end)
 	{
 		super.handleConnect(start, end);
-		System.out.printf("1-handleConnect: %s, %s\n", start, end);
+//		System.out.printf("1-handleConnect: %s, %s\n", start, end);
 
 		FSM_Model model = FSM_Model.getInstance();
 
@@ -65,7 +65,7 @@ public class OneConnection extends LineConnection
 	protected void handleDisconnect(Figure start, Figure end)
 	{
 		super.handleDisconnect(start, end);
-		System.out.printf("1-handleDisconnect : %s, %s\n", start, end);
+//		System.out.printf("1-handleDisconnect : %s, %s\n", start, end);
 	}
 
 	public String toString()

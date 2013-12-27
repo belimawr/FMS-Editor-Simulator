@@ -32,22 +32,30 @@ import CH.ifa.draw.tool.CreationTool;
 public class ZeroAdder extends CreationTool
 {
 	/*
- * This Tool does not use a prototype as I want
- * to keep track of the number of states created
- * (to label them) and to do so I need a completely
- * new object every time a new figure is created.
- */
+    * This Tool does not use a prototype as I want
+    * to keep track of the number of states created
+    * (to label them) and to do so I need a completely
+    * new object every time a new figure is created.
+    */
 	public ZeroAdder(DrawingView view)
 	{
 		super(view);
 	}
 
+	/*
+    * Just to be sure that this method is never
+    * going to be used.
+    */
 	public ZeroAdder(DrawingView view, Figure prototype)
 	{
 		super(view, prototype);
 		throw new Automata_Exception("Prototype cannot be used!");
 	}
 
+	/*
+    * Creates the figure and adds it to
+    * the data structure.
+    */
 	@Override
 	protected Figure createFigure()
 	{
@@ -57,7 +65,7 @@ public class ZeroAdder extends CreationTool
 		FSM_Model model = FSM_Model.getInstance();
 		model.insert(f, node);
 
-		System.out.printf("CreatedFigure: %s\n", (f).toString());
+//		System.out.printf("CreatedFigure: %s\n", (f).toString());
 		return f;
 	}
 }
