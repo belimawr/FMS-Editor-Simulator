@@ -9,23 +9,23 @@ import java.awt.*;
 /**
  * Author: Tiago de França Queiroz
  * Date: 21/12/13
- * <p/>
+ *
  * Copyright Tiago de França Queiroz, 2013.
- * <p/>
- * This file is part of Automata.Automata.Figures.
- * <p/>
- * Automata.Automata.Figures is free software: you can redistribute it and/or modify
+
+ * This file is part of Automata.
+ *
+ * Automata is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p/>
- * Automata.Automata.Figures is distributed in the hope that it will be useful,
+ *
+ * Automata is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * <p/>
+ *
  * You should have received a copy of the GNU General Public License
- * along with Automata.Automata.Figures. If not, see <http://www.gnu.org/licenses/>.
+ * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
 public class ZeroConnection extends LineConnection
 {
@@ -52,6 +52,9 @@ public class ZeroConnection extends LineConnection
 		FSM_Model model = FSM_Model.getInstance();
 
 		model.connectZero((CountingFigure) start, (CountingFigure) end);
+
+		/* Add the FSM_Model as a listener to this figure/connection */
+		this.addFigureChangeListener(model);
 	}
 
 	/*

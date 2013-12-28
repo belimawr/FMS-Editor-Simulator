@@ -52,6 +52,9 @@ public class OneConnection extends LineConnection
 		FSM_Model model = FSM_Model.getInstance();
 
 		model.connectOne((CountingFigure) start, (CountingFigure) end);
+
+		/* Add the FSM_Model as a listener to this figure/connection */
+		this.addFigureChangeListener(model);
 	}
 
 	/*
