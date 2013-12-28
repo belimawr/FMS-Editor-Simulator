@@ -1,9 +1,11 @@
 package Automata.Figures;
 
 import Automata.Model.FSM_Model;
+import Automata.Model.FSM_Node;
 import CH.ifa.draw.figure.connection.LineConnection;
 import CH.ifa.draw.framework.Figure;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -69,6 +71,24 @@ public class OneConnection extends LineConnection
 	{
 		super.handleDisconnect(start, end);
 //		System.out.printf("1-handleDisconnect : %s, %s\n", start, end);
+	}
+
+	/*
+	 * If the connection already exists, does not allow
+	 * create a new one.
+	 *
+	 * Replace the connection is not easy because
+	 * there are too many indirect calls. :(
+	 */
+	@Override
+	public boolean canConnect(Figure start, Figure end)
+	{
+		FSM_Node snode = FSM_Model.getInstance().getNode(start);
+
+		if(snode.getOne() != null)
+			return false;
+		else
+			return super.canConnect(start, end);
 	}
 
 	public String toString()
