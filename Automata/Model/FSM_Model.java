@@ -1,6 +1,11 @@
 package Automata.Model;
 
 import Automata.Figures.CountingFigure;
+import Automata.Figures.OneConnection;
+import Automata.Figures.ZeroConnection;
+import CH.ifa.draw.framework.Figure;
+import CH.ifa.draw.framework.FigureChangeEvent;
+import CH.ifa.draw.framework.FigureChangeListener;
 
 import java.util.*;
 
@@ -34,7 +39,7 @@ import java.util.*;
  * (and efficient) way of finding a node from
  * the figure is using a hashtable.
  */
-public class FSM_Model
+public class FSM_Model implements FigureChangeListener
 {
 	private static boolean valid;
 
@@ -61,6 +66,8 @@ public class FSM_Model
 	public void insert(CountingFigure key, FSM_Node node)
 	{
 		nodes.put(key, node);
+		/* Add this as a listener to the figure*/
+		key.addFigureChangeListener(this);
 		System.out.printf("FSM_Model: (%s, %s) inserted\n", key, node);
 	}
 
@@ -73,7 +80,7 @@ public class FSM_Model
 
 		nstart.setOne(nend);
 
-		System.out.printf("1: \"%s\"->\"%s\"", start, end);
+		System.out.printf("1: \"%s\"->\"%s\"\n", start, end);
 		return true;
 	}
 
@@ -86,12 +93,19 @@ public class FSM_Model
 
 		nstart.setZero(nend);
 
-		System.out.printf("1: \"%s\"->\"%s\"", start, end);
+		System.out.printf("1: \"%s\"->\"%s\"\n", start, end);
 		return true;
 	}
 
 	public boolean isValid()
 	{
+		if(start == null)
+		{
+			valid = false;
+			return false;
+		}
+
+		valid = true;
 		Collection<FSM_Node> states = nodes.values();
 		if(valid)
 			return true;
@@ -101,8 +115,8 @@ public class FSM_Model
 				if(!n.isValid())
 				{
 					valid = false;
+					return false;
 				}
-			valid = true;
 		}
 		return valid;
 	}
@@ -110,6 +124,11 @@ public class FSM_Model
 	public static FSM_Model getInstance()
 	{
 		return me;
+	}
+
+	public FSM_Node getNode(Figure f)
+	{
+		return nodes.get(f);
 	}
 
 	public void print_debug()
@@ -121,6 +140,71 @@ public class FSM_Model
 		for(FSM_Node n: my_nodes)
 				System.out.printf("[%2d] - %s\n", i++, n);
 
-		System.out.printf("I am valid: %s", isValid());
+		System.out.printf("Is model valid: %s\n", isValid());
+	}
+
+
+	/*
+	 * FigureChangeListener methods.
+	 * The only one used is figureRemoved
+	 * to remove the node from the data structure.
+	 */
+	@Override
+	public void figureChanged(FigureChangeEvent e)
+	{
+	}
+
+	@Override
+	public void figureInvalidated(FigureChangeEvent e)
+	{
+	}
+
+	/*
+	 * This method removes from the data structure the
+	 * figure that was deleted from the drawing.
+	 *
+	 * When a connection is removed, its links are
+	 * also removed as well
+	 */
+	@Override
+	public void figureRemoved(FigureChangeEvent e)
+	{
+		Figure f = e.getFigure();
+
+		/* If it's a State, just remove it */
+		if(f instanceof CountingFigure)
+		{
+			nodes.remove(f);
+			System.out.printf("Figure %s was removed\n", e.getFigure());
+		}
+		/* If it's a connection remove its link */
+		else if(f instanceof OneConnection)
+		{
+			OneConnection of = (OneConnection) f;
+			CountingFigure start = (CountingFigure) of.startFigure();
+			FSM_Node start_node = getNode(start);
+
+			start_node.setOne(null);
+			System.out.printf("OneConnection %s -> %s removed\n", start, ((OneConnection) f).endFigure());
+		}
+		else if(f instanceof ZeroConnection)
+		{
+			ZeroConnection of = (ZeroConnection) f;
+			CountingFigure start = (CountingFigure) of.startFigure();
+			FSM_Node start_node = getNode(start);
+
+			start_node.setZero(null);
+			System.out.printf("ZeroConnection %s -> %s removed\n", start, ((ZeroConnection) f).endFigure());
+		}
+	}
+
+	@Override
+	public void figureRequestRemove(FigureChangeEvent e)
+	{
+	}
+
+	@Override
+	public void figureRequestUpdate(FigureChangeEvent e)
+	{
 	}
 }
