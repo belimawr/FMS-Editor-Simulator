@@ -42,7 +42,7 @@ public class FSM_Node
 		myFigure = figure;
 	}
 
-	boolean isValid()
+	public boolean isValid()
 	{
 		if(zero != null && one != null)
 			return true;

@@ -2,6 +2,7 @@ package Automata;
 
 import Automata.Figures.OneConnection;
 import Automata.Figures.ZeroConnection;
+import Automata.Tools.DebugTool;
 import Automata.Tools.OneAdder;
 import Automata.Tools.StartStateTool;
 import Automata.Tools.ZeroAdder;
@@ -74,10 +75,13 @@ public class AutomataApp extends DrawApplication
 		palette.add(createToolButton(IMAGES + "BORDDEC", "Start State", new_tool));
 
 		new_tool = new ConnectionTool(view(), new OneConnection());
-		palette.add(createToolButton(IMAGES + "CONN", "1 Connection", new_tool));
+		palette.add(createToolButton(IMAGES + "CONN", "One Connection", new_tool));
 
 		new_tool = new ConnectionTool(view(), new ZeroConnection());
-		palette.add(createToolButton(IMAGES + "CONN", "1 Connection", new_tool));
+		palette.add(createToolButton(IMAGES + "CONN", "Zero Connection", new_tool));
+
+		new_tool = new DebugTool(view());
+		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
 	}
 
 	/**

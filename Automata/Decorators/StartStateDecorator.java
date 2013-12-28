@@ -1,5 +1,6 @@
 package Automata.Decorators;
 
+import Automata.Figures.CountingFigure;
 import CH.ifa.draw.figure.DecoratorFigure;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.framework.FigureChangeEvent;
@@ -36,7 +37,7 @@ public class StartStateDecorator
 	}
 
 	/*
-	 * Returns the atmosphere's size
+	 * Returns the size of the border
 	 */
 	private Point border_size()
 	{
@@ -61,8 +62,8 @@ public class StartStateDecorator
 		Rectangle r = displayBox();
 
 		g.setColor(Color.black);
-		g.drawOval(r.x - border_size().x/2,
-		           r.y - border_size().y/2,
+		g.drawOval(r.x - border_size().x / 2,
+		           r.y - border_size().y / 2,
 		           r.width + border_size().x,
 		           r.height + border_size().y);
 		super.draw(g);
@@ -77,5 +78,10 @@ public class StartStateDecorator
 		Rectangle rect = e.getInvalidatedRectangle();
 		rect.grow(border_size().x, border_size().y);
 		super.figureInvalidated(new FigureChangeEvent(e.getFigure(), rect));
+	}
+
+	public Figure getFigure()
+	{
+		return fComponent;
 	}
 }
