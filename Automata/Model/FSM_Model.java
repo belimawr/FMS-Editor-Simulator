@@ -184,7 +184,8 @@ public class FSM_Model implements FigureChangeListener
 			CountingFigure start = (CountingFigure) of.startFigure();
 			FSM_Node start_node = getNode(start);
 
-			start_node.setOne(null);
+			if(start_node != null)
+				start_node.setOne(null);
 			System.out.printf("OneConnection %s -> %s removed\n", start, ((OneConnection) f).endFigure());
 		}
 		else if(f instanceof ZeroConnection)
@@ -193,7 +194,8 @@ public class FSM_Model implements FigureChangeListener
 			CountingFigure start = (CountingFigure) of.startFigure();
 			FSM_Node start_node = getNode(start);
 
-			start_node.setZero(null);
+			if(start_node != null)
+				start_node.setZero(null);
 			System.out.printf("ZeroConnection %s -> %s removed\n", start, ((ZeroConnection) f).endFigure());
 		}
 	}
