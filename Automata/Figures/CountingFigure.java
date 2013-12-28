@@ -105,7 +105,9 @@ public class CountingFigure
 		 * is diameter or the diagonal of the display
 		 * box.
 		 */
-		if(display_box.height > 80)
+		if(display_box.height < 10)
+			display_box.setSize(10, 10);
+		else if(display_box.height > 80)
 			display_box.setSize(80, 80);
 	}
 
