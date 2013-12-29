@@ -31,7 +31,7 @@ import java.util.Vector;
 public class CountingFigure
 		extends EllipseFigure
 {
-	Rectangle display_box;
+	private Rectangle display_box;
 	static int counter = 0;
 	private int my_number;
 	private boolean state;

@@ -1,15 +1,18 @@
 package Automata;
 
 import Automata.Figures.OneConnection;
+import Automata.Figures.StartState;
 import Automata.Figures.ZeroConnection;
 import Automata.Tools.DebugTool;
 import Automata.Tools.OneAdder;
 import Automata.Tools.StartStateTool;
 import Automata.Tools.ZeroAdder;
 import CH.ifa.draw.application.DrawApplication;
+import CH.ifa.draw.figure.LineFigure;
 import CH.ifa.draw.framework.Tool;
 import CH.ifa.draw.palette.ToolButton;
 import CH.ifa.draw.tool.ConnectionTool;
+import CH.ifa.draw.tool.CreationTool;
 
 import javax.swing.*;
 
@@ -82,6 +85,10 @@ public class AutomataApp extends DrawApplication
 
 		new_tool = new DebugTool(view());
 		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
+
+		new_tool = new CreationTool(view(), new StartState(true));
+		palette.add(createToolButton(IMAGES + "ELLIPSE", "Composite figure Tool", new_tool));
+
 	}
 
 	/**
