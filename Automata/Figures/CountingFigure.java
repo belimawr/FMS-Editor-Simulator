@@ -1,8 +1,10 @@
 package Automata.Figures;
 
+import Automata.Handlers.StartStateHandler;
 import Automata.Handlers.StateHandler;
 import CH.ifa.draw.figure.EllipseFigure;
 import CH.ifa.draw.framework.Handle;
+import CH.ifa.draw.locator.RelativeLocator;
 
 import java.awt.*;
 import java.util.Vector;
@@ -75,10 +77,7 @@ public class CountingFigure
 	}
 
 	/**
-	 * Sets the display box which also means
-	 * changing the size of the planet. It also
-	 * constraints it to be always a circle and
-	 * add the maximum size
+	 * Fix the size of the state
 	 *
 	 * @param origin Origin of the display box
 	 * @param corner Opposite corner of the display box
@@ -86,36 +85,19 @@ public class CountingFigure
 	@Override
 	public void basicDisplayBox(Point origin, Point corner)
 	{
-		int dx, dy;
-
-		dx = Math.abs(origin.x - corner.x);
-		dy = Math.abs(origin.y - corner.y);
-
 		display_box = new Rectangle(origin);
 
-		if (dx > dy)
-			display_box.setSize(dx, dx);
-		else
-			display_box.setSize(dy, dy);
-
-		/*
-		 * Constraints the size to a maximum
-		 * of 120 pixels of diameter.
-		 * I need to double check if "pixels across"
-		 * is diameter or the diagonal of the display
-		 * box.
-		 */
-		if(display_box.height < 10)
-			display_box.setSize(10, 10);
-		else if(display_box.height > 80)
-			display_box.setSize(80, 80);
+		display_box.setSize(65, 65);
 	}
 
 	@Override
 	public Vector<Handle> handles()
 	{
 		Vector<Handle> handles = new Vector<Handle>();
-		handles.addElement(new StateHandler(this));
+		handles.addElement(new StartStateHandler(this, RelativeLocator.southEast()));
+		handles.addElement(new StartStateHandler(this, RelativeLocator.northEast()));
+		handles.addElement(new StartStateHandler(this, RelativeLocator.southWest()));
+		handles.addElement(new StartStateHandler(this, RelativeLocator.northWest()));
 		return handles;
 	}
 
