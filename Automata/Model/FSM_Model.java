@@ -141,6 +141,16 @@ public class FSM_Model implements FigureChangeListener
 		return nodes.get(f);
 	}
 
+	public FSM_Node getStart()
+	{
+		return start;
+	}
+
+	public void setStart(FSM_Node start)
+	{
+		FSM_Model.start = start;
+	}
+
 	public void print_debug()
 	{
 		int i = 0;
@@ -150,6 +160,7 @@ public class FSM_Model implements FigureChangeListener
 		for(FSM_Node n: my_nodes)
 				System.out.printf("[%2d] - %s\n", i++, n);
 
+		System.out.printf("StartState: %s\n", start);
 		System.out.printf("Is model valid: %s\n", isValid());
 	}
 

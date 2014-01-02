@@ -106,6 +106,11 @@ public class StartState extends CompositeFigure
 		return handles;
 	}
 
+	public CountingFigure getCircle()
+	{
+		return circle;
+	}
+
 	public String toString()
 	{
 		if(circle.getState())

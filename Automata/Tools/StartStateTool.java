@@ -53,10 +53,29 @@ public class StartStateTool extends ActionTool
 		{
 			FigureChangeListener listener = figure.listener();
 			figure.removeFigureChangeListener(listener);
+
 			StartState start = new StartState((CountingFigure) figure);
-			start.addFigureChangeListener(listener);
+
 			drawing().replace(figure, start);
 			model.replace(figure, start);
+			model.setStart(model.getNode(start));
+
+			start.addFigureChangeListener(listener);
+		}
+		else if(figure instanceof StartState)
+		{
+			CountingFigure old = ((StartState) figure).getCircle();
+			FigureChangeListener listener = figure.listener();
+
+			figure.removeFigureChangeListener(listener);
+
+
+			old.addFigureChangeListener(listener);
+
+			drawing().replace(figure, old);
+			model.replace(figure, old);
+			model.setStart(null);
+			figure.invalidate();
 		}
 	}
 }
