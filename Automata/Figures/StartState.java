@@ -1,9 +1,11 @@
 package Automata.Figures;
 
 import Automata.Handlers.WhiteNullHandler;
+import CH.ifa.draw.connector.ChopEllipseConnector;
 import CH.ifa.draw.figure.ArrowTip;
 import CH.ifa.draw.figure.CompositeFigure;
 import CH.ifa.draw.figure.LineFigure;
+import CH.ifa.draw.framework.Connector;
 import CH.ifa.draw.framework.Handle;
 import CH.ifa.draw.locator.RelativeLocator;
 
@@ -87,7 +89,11 @@ public class StartState extends CompositeFigure
 		ret.add(end);
 		return ret;
 	}
-
+//
+//	@Override
+//	public Connector connectorAt(int x, int y) {
+//		return new ChopEllipseConnector(circle);
+//	}
 
 	@Override
 	public Vector<Handle> handles()
@@ -98,5 +104,13 @@ public class StartState extends CompositeFigure
 		handles.addElement(new WhiteNullHandler(this, RelativeLocator.southWest()));
 		handles.addElement(new WhiteNullHandler(this, RelativeLocator.northWest()));
 		return handles;
+	}
+
+	public String toString()
+	{
+		if(circle.getState())
+			return String.format("%d-OneStateSTART", circle.getMy_number());
+		else
+			return String.format("%d-ZeroStateSTART", circle.getMy_number());
 	}
 }

@@ -2,6 +2,7 @@ package Automata.Model;
 
 import Automata.Figures.CountingFigure;
 import Automata.Figures.OneConnection;
+import Automata.Figures.StartState;
 import Automata.Figures.ZeroConnection;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.framework.FigureChangeEvent;
@@ -45,7 +46,7 @@ public class FSM_Model implements FigureChangeListener
 
 	private static FSM_Node start;
 
-	private Map<CountingFigure, FSM_Node> nodes;
+	private Map<Figure, FSM_Node> nodes;
 
 	/*
 	 * Singleton design pattern.
@@ -60,10 +61,10 @@ public class FSM_Model implements FigureChangeListener
 		valid = false;
 		start = null;
 
-		nodes = new HashMap<CountingFigure, FSM_Node>();
+		nodes = new HashMap<Figure, FSM_Node>();
 	}
 
-	public void insert(CountingFigure key, FSM_Node node)
+	public void insert(Figure key, FSM_Node node)
 	{
 		nodes.put(key, node);
 		/* Add this as a listener to the figure*/
@@ -71,7 +72,16 @@ public class FSM_Model implements FigureChangeListener
 		System.out.printf("FSM_Model: (%s, %s) inserted\n", key, node);
 	}
 
-	public boolean connectOne(CountingFigure start, CountingFigure end)
+	public void replace(Figure fold, Figure fnew)
+	{
+		FSM_Node node = nodes.remove(fold);
+		node.setMyFigure(fnew);
+		nodes.put(fnew, node);
+
+		System.out.printf("Replacing: %s -> %s\n", fold, fnew);
+	}
+
+	public boolean connectOne(Figure start, Figure end)
 	{
 		FSM_Node nstart, nend;
 
@@ -84,7 +94,7 @@ public class FSM_Model implements FigureChangeListener
 		return true;
 	}
 
-	public boolean connectZero(CountingFigure start, CountingFigure end)
+	public boolean connectZero(Figure start, Figure end)
 	{
 		FSM_Node nstart, nend;
 
@@ -172,7 +182,7 @@ public class FSM_Model implements FigureChangeListener
 		Figure f = e.getFigure();
 
 		/* If it's a State, just remove it */
-		if(f instanceof CountingFigure)
+		if(f instanceof CountingFigure || f instanceof StartState)
 		{
 			nodes.remove(f);
 			System.out.printf("Figure %s was removed\n", e.getFigure());
@@ -181,7 +191,7 @@ public class FSM_Model implements FigureChangeListener
 		else if(f instanceof OneConnection)
 		{
 			OneConnection of = (OneConnection) f;
-			CountingFigure start = (CountingFigure) of.startFigure();
+			Figure start = of.startFigure();
 			FSM_Node start_node = getNode(start);
 
 			if(start_node != null)
@@ -191,12 +201,16 @@ public class FSM_Model implements FigureChangeListener
 		else if(f instanceof ZeroConnection)
 		{
 			ZeroConnection of = (ZeroConnection) f;
-			CountingFigure start = (CountingFigure) of.startFigure();
+			Figure start = of.startFigure();
 			FSM_Node start_node = getNode(start);
 
 			if(start_node != null)
 				start_node.setZero(null);
 			System.out.printf("ZeroConnection %s -> %s removed\n", start, ((ZeroConnection) f).endFigure());
+		}
+		else
+		{
+			System.out.printf("I don't know what to do with %s\n", f);
 		}
 	}
 

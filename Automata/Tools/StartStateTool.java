@@ -4,8 +4,10 @@ import A_Planet_Simulator.AtmosphereDecorator;
 import Automata.Decorators.StartStateDecorator;
 import Automata.Figures.CountingFigure;
 import Automata.Figures.StartState;
+import Automata.Model.FSM_Model;
 import CH.ifa.draw.framework.DrawingView;
 import CH.ifa.draw.framework.Figure;
+import CH.ifa.draw.framework.FigureChangeListener;
 import CH.ifa.draw.tool.ActionTool;
 
 /**
@@ -46,10 +48,15 @@ public class StartStateTool extends ActionTool
 	@Override
 	public void action(Figure figure)
 	{
+		FSM_Model model = FSM_Model.getInstance();
 		if(figure instanceof CountingFigure)
 		{
+			FigureChangeListener listener = figure.listener();
+			figure.removeFigureChangeListener(listener);
 			StartState start = new StartState((CountingFigure) figure);
+			start.addFigureChangeListener(listener);
 			drawing().replace(figure, start);
+			model.replace(figure, start);
 		}
 	}
 }

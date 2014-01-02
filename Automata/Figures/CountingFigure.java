@@ -100,6 +100,16 @@ public class CountingFigure
 		return handles;
 	}
 
+	public int getMy_number()
+	{
+		return my_number;
+	}
+
+	public boolean getState()
+	{
+		return state;
+	}
+
 	public String toString()
 	{
 		if(state)

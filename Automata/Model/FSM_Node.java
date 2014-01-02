@@ -1,6 +1,7 @@
 package Automata.Model;
 
 import Automata.Figures.CountingFigure;
+import CH.ifa.draw.framework.Figure;
 
 /**
  * Author: Tiago de França Queiroz
@@ -26,7 +27,7 @@ import Automata.Figures.CountingFigure;
 public class FSM_Node
 {
 	FSM_Node zero, one;
-	CountingFigure myFigure;
+	Figure myFigure;
 
 	public FSM_Node()
 	{
@@ -35,7 +36,7 @@ public class FSM_Node
 		myFigure = null;
 	}
 
-	public FSM_Node(CountingFigure figure)
+	public FSM_Node(Figure figure)
 	{
 		zero = null;
 		one = null;
@@ -47,6 +48,16 @@ public class FSM_Node
 		if(zero != null && one != null)
 			return true;
 		return false;
+	}
+
+	public Figure getMyFigure()
+	{
+		return myFigure;
+	}
+
+	public void setMyFigure(Figure myFigure)
+	{
+		this.myFigure = myFigure;
 	}
 
 	public FSM_Node getZero()

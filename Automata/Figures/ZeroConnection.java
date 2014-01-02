@@ -52,7 +52,7 @@ public class ZeroConnection extends LineConnection
 
 		FSM_Model model = FSM_Model.getInstance();
 
-		model.connectZero((CountingFigure) start, (CountingFigure) end);
+		model.connectZero(start, end);
 
 		/* Add the FSM_Model as a listener to this figure/connection */
 		this.addFigureChangeListener(model);

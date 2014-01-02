@@ -5,7 +5,6 @@ import Automata.Model.FSM_Node;
 import CH.ifa.draw.figure.connection.LineConnection;
 import CH.ifa.draw.framework.Figure;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -53,7 +52,7 @@ public class OneConnection extends LineConnection
 
 		FSM_Model model = FSM_Model.getInstance();
 
-		model.connectOne((CountingFigure) start, (CountingFigure) end);
+		model.connectOne(start, end);
 
 		/* Add the FSM_Model as a listener to this figure/connection */
 		this.addFigureChangeListener(model);
@@ -83,6 +82,7 @@ public class OneConnection extends LineConnection
 	@Override
 	public boolean canConnect(Figure start, Figure end)
 	{
+		System.out.printf("canConnect: Start: %s\n", start);
 		FSM_Node snode = FSM_Model.getInstance().getNode(start);
 
 		if(snode.getOne() != null)
