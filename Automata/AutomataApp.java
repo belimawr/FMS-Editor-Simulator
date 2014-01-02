@@ -9,8 +9,10 @@ import Automata.Tools.StartStateTool;
 import Automata.Tools.ZeroAdder;
 import CH.ifa.draw.application.DrawApplication;
 import CH.ifa.draw.figure.LineFigure;
+import CH.ifa.draw.figure.TextFigure;
 import CH.ifa.draw.framework.Tool;
 import CH.ifa.draw.palette.ToolButton;
+import CH.ifa.draw.tool.ConnectedTextTool;
 import CH.ifa.draw.tool.ConnectionTool;
 import CH.ifa.draw.tool.CreationTool;
 
@@ -68,6 +70,9 @@ public class AutomataApp extends DrawApplication
 
 		Tool new_tool;
 
+		new_tool = new ConnectedTextTool(view(), new TextFigure());
+		palette.add(createToolButton(IMAGES + "ATEXT", "Connected Text Tool", new_tool));
+
 		new_tool = new OneAdder(view());
 		palette.add(createToolButton(IMAGES + "ELLIPSE", "New One Adder", new_tool));
 
@@ -85,10 +90,6 @@ public class AutomataApp extends DrawApplication
 
 		new_tool = new DebugTool(view());
 		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
-
-		new_tool = new CreationTool(view(), new StartState(true));
-		palette.add(createToolButton(IMAGES + "ELLIPSE", "Composite figure Tool", new_tool));
-
 	}
 
 	/**
