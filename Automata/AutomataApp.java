@@ -1,14 +1,10 @@
 package Automata;
 
-import Automata.Figures.OneConnection;
-import Automata.Figures.StartState;
-import Automata.Figures.ZeroConnection;
-import Automata.Tools.DebugTool;
-import Automata.Tools.OneAdder;
-import Automata.Tools.StartStateTool;
-import Automata.Tools.ZeroAdder;
+import Automata.Figures.*;
+import Automata.Tools.*;
 import CH.ifa.draw.application.DrawApplication;
 import CH.ifa.draw.figure.LineFigure;
+import CH.ifa.draw.figure.RectangleFigure;
 import CH.ifa.draw.figure.TextFigure;
 import CH.ifa.draw.framework.Tool;
 import CH.ifa.draw.palette.ToolButton;
@@ -41,6 +37,7 @@ import javax.swing.*;
  */
 public class AutomataApp extends DrawApplication
 {
+	private static final String AUTOMATA_IMAGES = "/Automata/Images/";
 	/**
 	 * Creates an instance of PlanetSimulatorApp
 	 * and starts it
@@ -80,7 +77,10 @@ public class AutomataApp extends DrawApplication
 		palette.add(createToolButton(IMAGES + "ELLIPSE", "New Zero Adder", new_tool));
 
 		new_tool = new StartStateTool(view());
-		palette.add(createToolButton(IMAGES + "BORDDEC", "Start State", new_tool));
+		palette.add(createToolButton(AUTOMATA_IMAGES + "START", "Start State", new_tool));
+
+		new_tool = new EndStateTool(view());
+		palette.add(createToolButton(AUTOMATA_IMAGES + "END", "End State Tool", new_tool));
 
 		new_tool = new ConnectionTool(view(), new OneConnection());
 		palette.add(createToolButton(IMAGES + "CONN", "One Connection", new_tool));
@@ -90,6 +90,7 @@ public class AutomataApp extends DrawApplication
 
 		new_tool = new DebugTool(view());
 		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
+
 	}
 
 	/**
