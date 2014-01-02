@@ -83,6 +83,11 @@ public class EndState extends CompositeFigure
 		return new ChopEllipseConnector(this);
 	}
 
+	public CountingFigure getCircle()
+	{
+		return circle;
+	}
+
 	@Override
 	public Vector<Handle> handles()
 	{

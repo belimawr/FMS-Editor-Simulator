@@ -1,9 +1,6 @@
 package Automata.Model;
 
-import Automata.Figures.CountingFigure;
-import Automata.Figures.OneConnection;
-import Automata.Figures.StartState;
-import Automata.Figures.ZeroConnection;
+import Automata.Figures.*;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.framework.FigureChangeEvent;
 import CH.ifa.draw.framework.FigureChangeListener;
@@ -193,7 +190,7 @@ public class FSM_Model implements FigureChangeListener
 		Figure f = e.getFigure();
 
 		/* If it's a State, just remove it */
-		if(f instanceof CountingFigure || f instanceof StartState)
+		if(f instanceof CountingFigure || f instanceof StartState || f instanceof EndState)
 		{
 			nodes.remove(f);
 			System.out.printf("Figure %s was removed\n", e.getFigure());

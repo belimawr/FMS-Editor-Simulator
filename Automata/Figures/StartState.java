@@ -1,5 +1,6 @@
 package Automata.Figures;
 
+import Automata.Connector.StartStateConnector;
 import Automata.Handlers.WhiteNullHandler;
 import CH.ifa.draw.connector.ChopEllipseConnector;
 import CH.ifa.draw.figure.ArrowTip;
@@ -91,20 +92,10 @@ public class StartState extends CompositeFigure
 	}
 
 	@Override
-	public void draw(Graphics g)
+	public Connector connectorAt(int x, int y)
 	{
-		super.draw(g);
-		Rectangle ret = displayBox();
-
-		g.setColor(Color.gray);
-		g.drawRect(ret.x, ret.y, ret.width, ret.height);
+		return new StartStateConnector(this);
 	}
-
-	//
-//	@Override
-//	public Connector connectorAt(int x, int y) {
-//		return new ChopEllipseConnector(circle);
-//	}
 
 	@Override
 	public Vector<Handle> handles()

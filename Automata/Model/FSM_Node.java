@@ -26,14 +26,16 @@ import CH.ifa.draw.framework.Figure;
  */
 public class FSM_Node
 {
-	FSM_Node zero, one;
-	Figure myFigure;
+	private FSM_Node zero, one;
+	private Figure myFigure;
+	private boolean end;
 
 	public FSM_Node()
 	{
 		zero = null;
 		one = null;
 		myFigure = null;
+		end = false;
 	}
 
 	public FSM_Node(Figure figure)
@@ -78,6 +80,16 @@ public class FSM_Node
 	public void setOne(FSM_Node one)
 	{
 		this.one = one;
+	}
+
+	public boolean isEnd()
+	{
+		return end;
+	}
+
+	public void setEnd(boolean end)
+	{
+		this.end = end;
 	}
 
 	public String toString()

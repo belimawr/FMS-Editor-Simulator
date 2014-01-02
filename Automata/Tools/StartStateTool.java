@@ -49,8 +49,12 @@ public class StartStateTool extends ActionTool
 	public void action(Figure figure)
 	{
 		FSM_Model model = FSM_Model.getInstance();
+
 		if(figure instanceof CountingFigure)
 		{
+			if(model.getStart() != null)
+				return;
+
 			FigureChangeListener listener = figure.listener();
 			figure.removeFigureChangeListener(listener);
 
