@@ -1,7 +1,6 @@
 package Automata.Figures;
 
-import Automata.Handlers.StartStateHandler;
-import Automata.Handlers.StateHandler;
+import Automata.Handlers.WhiteNullHandler;
 import CH.ifa.draw.figure.EllipseFigure;
 import CH.ifa.draw.framework.Handle;
 import CH.ifa.draw.locator.RelativeLocator;
@@ -94,10 +93,10 @@ public class CountingFigure
 	public Vector<Handle> handles()
 	{
 		Vector<Handle> handles = new Vector<Handle>();
-		handles.addElement(new StartStateHandler(this, RelativeLocator.southEast()));
-		handles.addElement(new StartStateHandler(this, RelativeLocator.northEast()));
-		handles.addElement(new StartStateHandler(this, RelativeLocator.southWest()));
-		handles.addElement(new StartStateHandler(this, RelativeLocator.northWest()));
+		handles.addElement(new WhiteNullHandler(this, RelativeLocator.southEast()));
+		handles.addElement(new WhiteNullHandler(this, RelativeLocator.northEast()));
+		handles.addElement(new WhiteNullHandler(this, RelativeLocator.southWest()));
+		handles.addElement(new WhiteNullHandler(this, RelativeLocator.northWest()));
 		return handles;
 	}
 
