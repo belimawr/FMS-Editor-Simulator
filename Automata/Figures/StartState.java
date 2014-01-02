@@ -89,7 +89,18 @@ public class StartState extends CompositeFigure
 		ret.add(end);
 		return ret;
 	}
-//
+
+	@Override
+	public void draw(Graphics g)
+	{
+		super.draw(g);
+		Rectangle ret = displayBox();
+
+		g.setColor(Color.gray);
+		g.drawRect(ret.x, ret.y, ret.width, ret.height);
+	}
+
+	//
 //	@Override
 //	public Connector connectorAt(int x, int y) {
 //		return new ChopEllipseConnector(circle);
