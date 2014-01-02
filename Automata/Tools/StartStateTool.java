@@ -2,6 +2,8 @@ package Automata.Tools;
 
 import A_Planet_Simulator.AtmosphereDecorator;
 import Automata.Decorators.StartStateDecorator;
+import Automata.Figures.CountingFigure;
+import Automata.Figures.StartState;
 import CH.ifa.draw.framework.DrawingView;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.tool.ActionTool;
@@ -27,8 +29,7 @@ import CH.ifa.draw.tool.ActionTool;
  * You should have received a copy of the GNU General Public License
  * along with Automata.Automata. If not, see <http://www.gnu.org/licenses/>.
  */
-public class StartStateTool
-		extends ActionTool
+public class StartStateTool extends ActionTool
 {
 	public StartStateTool(DrawingView itsView)
 	{
@@ -36,21 +37,19 @@ public class StartStateTool
 	}
 
 	/*
-	 * If the figure is not decorated,
-	 * add an StartStateDecorator,
-	 * else
-	 * peel the decorator off and replace
-	 * the figure by itself...
+	 * replaces a CountingFigure by an StartState
+	 * or the other way around.
+	 *
+	 * Also do the necessary modifications on the data
+	 * structure.
 	 */
 	@Override
 	public void action(Figure figure)
 	{
-		if(figure instanceof StartStateDecorator)
+		if(figure instanceof CountingFigure)
 		{
-			Figure f = ((StartStateDecorator) figure).peelDecoration();
-			drawing().replace(figure, f);
+			StartState start = new StartState((CountingFigure) figure);
+			drawing().replace(figure, start);
 		}
-		else
-			drawing().replace(figure, new StartStateDecorator(figure));
 	}
 }
