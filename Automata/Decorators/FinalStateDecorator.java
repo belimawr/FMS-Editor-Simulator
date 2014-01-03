@@ -37,7 +37,7 @@ public class FinalStateDecorator
 	/*
 	 * Returns the atmosphere's size
 	 */
-	private Point atmosphere_size()
+	private Point border_size()
 	{
 		return new Point(6, 6);
 	}
@@ -46,7 +46,7 @@ public class FinalStateDecorator
 	public Rectangle displayBox()
 	{
 		Rectangle r = fComponent.displayBox();
-		r.grow(atmosphere_size().x, atmosphere_size().y);
+		r.grow(border_size().x, border_size().y);
 
 		return r;
 	}
@@ -60,10 +60,10 @@ public class FinalStateDecorator
 		Rectangle r = displayBox();
 
 		g.setColor(Color.black);
-		g.drawOval(r.x - atmosphere_size().x / 2,
-		           r.y - atmosphere_size().y / 2,
-		           r.width + atmosphere_size().x,
-		           r.height + atmosphere_size().y);
+		g.drawOval(r.x - border_size().x / 2,
+		           r.y - border_size().y / 2,
+		           r.width + border_size().x,
+		           r.height + border_size().y);
 		super.draw(g);
 	}
 
@@ -74,7 +74,7 @@ public class FinalStateDecorator
 	public void figureInvalidated(FigureChangeEvent e)
 	{
 		Rectangle rect = e.getInvalidatedRectangle();
-		rect.grow(atmosphere_size().x, atmosphere_size().y);
+		rect.grow(border_size().x, border_size().y);
 		super.figureInvalidated(new FigureChangeEvent(e.getFigure(), rect));
 	}
 }
