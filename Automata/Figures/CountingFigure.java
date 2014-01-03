@@ -138,7 +138,7 @@ public class CountingFigure extends EllipseFigure
 	 * Connector stuff to allow a 'nice'
 	 * self connection.
 	 *
-	 * Almost everything is copy past
+	 * Everything is copy past
 	 * from NodeFigure.
 	 */
 	private Connector findConnector(int x, int y)

@@ -1,7 +1,6 @@
 package Automata.Connector;
 
 import Automata.Figures.OneConnection;
-import CH.ifa.draw.connector.LocatorConnector;
 import CH.ifa.draw.framework.*;
 import CH.ifa.draw.handle.ConnectionHandle;
 
@@ -33,6 +32,9 @@ public class CountingFigureConnectorHandler extends ConnectionHandle
 {
 	private static int BORDER = 4;
 	private Color color;
+
+	private ConnectionFigure createdConnection;
+
 	/**
 	 * Constructs a handle with the given owner, locator, and connection prototype
 	 */
@@ -74,7 +76,6 @@ public class CountingFigureConnectorHandler extends ConnectionHandle
 	}
 
 	/* Some copy paste with small modifications to allow self connection */
-	private ConnectionFigure createdConnection;
 	@Override
 	protected Connector findConnectionTarget(int x, int y, Drawing drawing)
 	{
@@ -88,6 +89,7 @@ public class CountingFigureConnectorHandler extends ConnectionHandle
 		return null;
 	}
 
+	/* Copy paste as it is private in super class... */
 	private Figure findConnectableFigure(int x, int y, Drawing drawing)
 	{
 		Enumeration<Figure> k = drawing.figuresReverse();

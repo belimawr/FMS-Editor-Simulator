@@ -11,26 +11,25 @@ import java.util.List;
 /**
  * Author: Tiago de França Queiroz
  * Date: 02/01/14
- * <p/>
+ *
  * Copyright Tiago de França Queiroz, 2014.
- * <p/>
- * This file is part of Automata.Automata.Tests.
- * <p/>
- * Automata.Automata.Tests is free software: you can redistribute it and/or modify
+ *
+ * This file is part of Automata.
+ *
+ * Automata is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p/>
- * Automata.Automata.Tests is distributed in the hope that it will be useful,
+ *
+ * Automata is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * <p/>
+ *
  * You should have received a copy of the GNU General Public License
- * along with Automata.Automata.Tests. If not, see <http://www.gnu.org/licenses/>.
+ * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
-public abstract class AutomataDecorator
-		extends DecoratorFigure
+public abstract class AutomataDecorator extends DecoratorFigure
 {
 	protected CountingFigure parent;
 
@@ -91,30 +90,6 @@ public abstract class AutomataDecorator
 	{
 		if(figure instanceof AutomataDecorator)
 		{
-			/* There should be only one figure */
-//			Enumeration<Figure> fs= figure.decompose();
-//			Figure fparent = null;
-//			int i = 0;
-//
-//			while(fs.hasMoreElements())
-//			{
-//				i++;
-//				fparent = fs.nextElement();
-//			}
-//
-//			if(i != 1)
-//				throw new Automata_Exception("AutomataDecorator should only be used to decorate CountingFigure!");
-//			if(!(fparent instanceof CountingFigure))
-//				throw new Automata_Exception("AutomataDecorator should only be used to decorate CountingFigure!");
-//
-//			System.out.printf("I am an %s and %s is being decorated\n",
-//			                  this.getClass().getSimpleName(),
-//			                  figure.getClass().getSimpleName());
-//			System.out.printf("\n==\nStartDec: %s\nEndDec: %s\n==\n",
-//			                  ((AutomataDecorator) figure).getStartDecorator(),
-//			                  ((AutomataDecorator) figure).getEndDecorator());
-//			for(AutomataDecorator d: ((AutomataDecorator) figure).getDecorators())
-//				System.out.printf("Dec: %s\n", d.getClass().getSimpleName());
 			super.decorate(figure);
 		}
 		else

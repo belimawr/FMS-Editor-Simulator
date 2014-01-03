@@ -34,8 +34,7 @@ import java.io.IOException;
  * The attributes are private, so I had to
  * copy the whole class instead of extending it....
  */
-public class BorderArrowTip
-		implements LineDecoration
+public class BorderArrowTip implements LineDecoration
 {
 	private double  fAngle;         // pointiness of arrow
 	private double  fOuterRadius;
@@ -126,5 +125,4 @@ public class BorderArrowTip
 	public void write(StorableOutput dw)
 	{
 	}
-
 }

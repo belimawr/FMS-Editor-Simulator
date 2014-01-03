@@ -30,8 +30,7 @@ import CH.ifa.draw.tool.ActionTool;
  * You should have received a copy of the GNU General Public License
  * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
-public class StartDecoratorTool
-		extends ActionTool
+public class StartDecoratorTool extends ActionTool
 {
 	public StartDecoratorTool(DrawingView itsView)
 	{

@@ -33,8 +33,7 @@ import java.awt.event.MouseEvent;
  * You should have received a copy of the GNU General Public License
  * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
-public class FinalStateDecoratorTool
-		extends ActionTool
+public class FinalStateDecoratorTool extends ActionTool
 {
 	public FinalStateDecoratorTool(DrawingView itsView)
 	{
