@@ -1,8 +1,12 @@
 package Automata.Figures;
 
+import Automata.Connector.CountingFigureConnectorHandler;
 import Automata.Handlers.WhiteNullHandler;
+import CH.ifa.draw.connector.LocatorConnector;
 import CH.ifa.draw.figure.EllipseFigure;
+import CH.ifa.draw.framework.ConnectionFigure;
 import CH.ifa.draw.framework.Handle;
+import CH.ifa.draw.handle.ConnectionHandle;
 import CH.ifa.draw.locator.RelativeLocator;
 
 import java.awt.*;
@@ -25,7 +29,7 @@ import java.util.Vector;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * <p/>
+ *
  * You should have received a copy of the GNU General Public License
  * along with Automata If not, see <http://www.gnu.org/licenses/>.
  */
@@ -91,11 +95,18 @@ public class CountingFigure extends EllipseFigure
 	@Override
 	public Vector<Handle> handles()
 	{
+		ConnectionFigure one = new OneConnection();
+		ConnectionFigure zero = new ZeroConnection();
 		Vector<Handle> handles = new Vector<Handle>();
 		handles.addElement(new WhiteNullHandler(this, RelativeLocator.southEast()));
 		handles.addElement(new WhiteNullHandler(this, RelativeLocator.northEast()));
 		handles.addElement(new WhiteNullHandler(this, RelativeLocator.southWest()));
 		handles.addElement(new WhiteNullHandler(this, RelativeLocator.northWest()));
+
+		handles.addElement(new CountingFigureConnectorHandler(this, RelativeLocator.east(), one));
+		handles.addElement(new CountingFigureConnectorHandler(this, RelativeLocator.west(), one));
+		handles.addElement(new CountingFigureConnectorHandler(this, RelativeLocator.south(), zero));
+		handles.addElement(new CountingFigureConnectorHandler(this, RelativeLocator.north(), zero));
 		return handles;
 	}
 
