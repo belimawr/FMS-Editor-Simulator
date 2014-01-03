@@ -26,70 +26,55 @@ import java.awt.*;
  * You should have received a copy of the GNU General Public License
  * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
-public class StartStateDecorator extends AutomataDecorator
+public class FinalStateDecorator
+		extends AutomataDecorator
 {
-	public StartStateDecorator(Figure figure)
+	public FinalStateDecorator(Figure figure)
 	{
 		super(figure);
+	}
+
+	/*
+	 * Returns the atmosphere's size
+	 */
+	private Point atmosphere_size()
+	{
+		return new Point(6, 6);
 	}
 
 	@Override
 	public Rectangle displayBox()
 	{
-		Rectangle rect = fComponent.displayBox();
-		Point center = fComponent.center();
-		Point p1, p2;
-		int radius = rect.height/2;
+		Rectangle r = fComponent.displayBox();
+		r.grow(atmosphere_size().x, atmosphere_size().y);
 
-		p1 = new Point(center.x, center.y - radius);
-		p2 = new Point(p1.x, p1.y - 50);
-		rect.add(p1);
-		rect.add(p2);
-		return rect;
+		return r;
 	}
 
+	/*
+	 * Draws the atmosphere (magenta border)
+	 */
 	@Override
 	public void draw(Graphics g)
 	{
-		Rectangle r = fComponent.displayBox();
-		Polygon triangle = new Polygon();
-		Point p1, p2, p3;
-		Point center = fComponent.center();
-		int radius = r.height/2;
+		Rectangle r = displayBox();
 
-		p1 = new Point(center.x, center.y - radius);
-		p2 = new Point(p1.x + 10, p1.y - 15);
-		p3 = new Point(p1.x - 10, p1.y - 15);
-
-		triangle.addPoint(p1.x, p1.y);
-		triangle.addPoint(p2.x, p2.y);
-		triangle.addPoint(p3.x, p3.y);
 		g.setColor(Color.black);
-		g.fillPolygon(triangle);
-		g.drawLine(p1.x, p1.y, p1.x, p1.y - 50);
+		g.drawOval(r.x - atmosphere_size().x / 2,
+		           r.y - atmosphere_size().y / 2,
+		           r.width + atmosphere_size().x,
+		           r.height + atmosphere_size().y);
 		super.draw(g);
 	}
 
 	/**
-	 * Invalidates the figure extended by its decorator.
+	 * Invalidates the figure extended by its border.
 	 */
 	@Override
 	public void figureInvalidated(FigureChangeEvent e)
 	{
 		Rectangle rect = e.getInvalidatedRectangle();
-		Point center = fComponent.center();
-		Point p1, p2;
-		int radius = rect.height/2;
-
-		p1 = new Point(center.x, center.y - radius);
-		p2 = new Point(p1.x, p1.y - 50);
-		rect.add(p1);
-		rect.add(p2);
+		rect.grow(atmosphere_size().x, atmosphere_size().y);
 		super.figureInvalidated(new FigureChangeEvent(e.getFigure(), rect));
-	}
-
-	public Figure getFigure()
-	{
-		return fComponent;
 	}
 }

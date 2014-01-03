@@ -187,39 +187,39 @@ public class FSM_Model implements FigureChangeListener
 	@Override
 	public void figureRemoved(FigureChangeEvent e)
 	{
-		Figure f = e.getFigure();
-
-		/* If it's a State, just remove it */
-		if(f instanceof CountingFigure || f instanceof StartState || f instanceof EndState)
-		{
-			nodes.remove(f);
-			System.out.printf("Figure %s was removed\n", e.getFigure());
-		}
-		/* If it's a connection remove its link */
-		else if(f instanceof OneConnection)
-		{
-			OneConnection of = (OneConnection) f;
-			Figure start = of.startFigure();
-			FSM_Node start_node = getNode(start);
-
-			if(start_node != null)
-				start_node.setOne(null);
-			System.out.printf("OneConnection %s -> %s removed\n", start, ((OneConnection) f).endFigure());
-		}
-		else if(f instanceof ZeroConnection)
-		{
-			ZeroConnection of = (ZeroConnection) f;
-			Figure start = of.startFigure();
-			FSM_Node start_node = getNode(start);
-
-			if(start_node != null)
-				start_node.setZero(null);
-			System.out.printf("ZeroConnection %s -> %s removed\n", start, ((ZeroConnection) f).endFigure());
-		}
-		else
-		{
-			System.out.printf("I don't know what to do with %s\n", f);
-		}
+//		Figure f = e.getFigure();
+//
+//		/* If it's a State, just remove it */
+//		if(f instanceof CountingFigure || f instanceof StartState || f instanceof EndState)
+//		{
+//			nodes.remove(f);
+//			System.out.printf("Figure %s was removed\n", e.getFigure());
+//		}
+//		/* If it's a connection remove its link */
+//		else if(f instanceof OneConnection)
+//		{
+//			OneConnection of = (OneConnection) f;
+//			Figure start = of.startFigure();
+//			FSM_Node start_node = getNode(start);
+//
+//			if(start_node != null)
+//				start_node.setOne(null);
+//			System.out.printf("OneConnection %s -> %s removed\n", start, ((OneConnection) f).endFigure());
+//		}
+//		else if(f instanceof ZeroConnection)
+//		{
+//			ZeroConnection of = (ZeroConnection) f;
+//			Figure start = of.startFigure();
+//			FSM_Node start_node = getNode(start);
+//
+//			if(start_node != null)
+//				start_node.setZero(null);
+//			System.out.printf("ZeroConnection %s -> %s removed\n", start, ((ZeroConnection) f).endFigure());
+//		}
+//		else
+//		{
+//			System.out.printf("I don't know what to do with %s\n", f);
+//		}
 	}
 
 	@Override

@@ -1,10 +1,9 @@
-package Automata.Connector;
+package Automata.Tools;
 
-import CH.ifa.draw.connector.ChopEllipseConnector;
+import Automata.Decorators.StartStateDecorator;
+import CH.ifa.draw.framework.DrawingView;
 import CH.ifa.draw.framework.Figure;
-import CH.ifa.draw.util.Geom;
-
-import java.awt.*;
+import CH.ifa.draw.tool.ActionTool;
 
 /**
  * Author: Tiago de França Queiroz
@@ -27,18 +26,32 @@ import java.awt.*;
  * You should have received a copy of the GNU General Public License
  * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
-public class StartStateConnector extends ChopEllipseConnector
+public class StartDecoratorTool
+		extends ActionTool
 {
-	public StartStateConnector(Figure owner)
+	public StartDecoratorTool(DrawingView itsView)
 	{
-		super(owner);
+		super(itsView);
 	}
 
-//	@Override
-//	protected Point chop(Figure target, Point from)
-//	{
-//		Rectangle r = ((StartState) target).getCircle().displayBox();
-//		double angle = Geom.pointToAngle(r, from);
-//		return Geom.ovalAngleToPoint(r, angle);
-//	}
+	/*
+	 * If the figure is not decorated,
+	 * add an EndDec,
+	 * else
+	 * peel the decorator off and replace
+	 * the figure by itself...
+	 */
+	@Override
+	public void action(Figure figure)
+	{
+		/* Remove the decorator */
+		if(figure instanceof StartStateDecorator)
+		{
+			Figure f = ((StartStateDecorator) figure).peelDecoration();
+			drawing().replace(figure, f);
+		}
+		/* Put the decorator */
+		else
+			drawing().replace(figure, new StartStateDecorator(figure));
+	}
 }

@@ -29,8 +29,7 @@ import java.util.Vector;
  * You should have received a copy of the GNU General Public License
  * along with Automata If not, see <http://www.gnu.org/licenses/>.
  */
-public class CountingFigure
-		extends EllipseFigure
+public class CountingFigure extends EllipseFigure
 {
 	private Rectangle display_box;
 	static int counter = 0;

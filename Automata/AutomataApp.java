@@ -3,14 +3,11 @@ package Automata;
 import Automata.Figures.*;
 import Automata.Tools.*;
 import CH.ifa.draw.application.DrawApplication;
-import CH.ifa.draw.figure.LineFigure;
-import CH.ifa.draw.figure.RectangleFigure;
 import CH.ifa.draw.figure.TextFigure;
 import CH.ifa.draw.framework.Tool;
 import CH.ifa.draw.palette.ToolButton;
 import CH.ifa.draw.tool.ConnectedTextTool;
 import CH.ifa.draw.tool.ConnectionTool;
-import CH.ifa.draw.tool.CreationTool;
 
 import javax.swing.*;
 
@@ -76,10 +73,10 @@ public class AutomataApp extends DrawApplication
 		new_tool = new ZeroAdder(view());
 		palette.add(createToolButton(IMAGES + "ELLIPSE", "New Zero Adder", new_tool));
 
-		new_tool = new StartStateTool(view());
+		new_tool = new StartDecoratorTool(view());
 		palette.add(createToolButton(AUTOMATA_IMAGES + "START", "Start State", new_tool));
 
-		new_tool = new EndStateTool(view());
+		new_tool = new FinalStateDecoratorTool(view());
 		palette.add(createToolButton(AUTOMATA_IMAGES + "END", "End State Tool", new_tool));
 
 		new_tool = new ConnectionTool(view(), new OneConnection());
@@ -90,7 +87,6 @@ public class AutomataApp extends DrawApplication
 
 		new_tool = new DebugTool(view());
 		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
-
 	}
 
 	/**

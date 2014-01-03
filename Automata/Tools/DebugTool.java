@@ -3,11 +3,13 @@ package Automata.Tools;
 import Automata.Decorators.StartStateDecorator;
 import Automata.Model.FSM_Model;
 import Automata.Model.FSM_Node;
+import CH.ifa.draw.figure.DecoratorFigure;
 import CH.ifa.draw.framework.DrawingView;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.tool.SelectionTool;
 
 import java.awt.event.MouseEvent;
+import java.util.Enumeration;
 
 /**
  * Author: Tiago de França Queiroz
@@ -58,6 +60,26 @@ public class DebugTool extends SelectionTool
 				f = ((StartStateDecorator) f).getFigure();
 				System.out.print("Start State: ");
 			}
+			else if(f instanceof DecoratorFigure)
+			{
+				System.out.printf("This Figure is Decorated\n");
+				Enumeration<Figure> figures;
+
+				figures = f.decompose();
+				Figure ff;
+				while(figures.hasMoreElements())
+				{
+					ff = figures.nextElement();
+					System.out.printf("Decompose: %s\n", ff);
+				}
+
+				figures = f.figures();
+				while(figures.hasMoreElements())
+				{
+					ff = figures.nextElement();
+					System.out.printf("Figures: %s\n", ff);
+				}
+			}
 
 			FSM_Node node = model.getNode(f);
 			if(node != null)
@@ -66,6 +88,6 @@ public class DebugTool extends SelectionTool
 				System.out.printf("Figure Selected: %s\n", f);
 		}
 		else
-			System.out.println("Hi!");
+			System.out.println("Figure is null!");
 	}
 }
