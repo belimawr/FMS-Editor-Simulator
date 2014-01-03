@@ -1,6 +1,7 @@
 package Automata;
 
 import Automata.Figures.*;
+import Automata.Model.FSM_Model;
 import Automata.Tools.*;
 import CH.ifa.draw.application.DrawApplication;
 import CH.ifa.draw.figure.TextFigure;
@@ -9,6 +10,9 @@ import CH.ifa.draw.palette.ToolButton;
 import CH.ifa.draw.tool.ConnectedTextTool;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Author: Tiago de França Queiroz
@@ -51,6 +55,35 @@ public class AutomataApp extends DrawApplication
 		TextFigure.setCurrentFontSize(20);
 	}
 
+	private JMenu createValidationMenu()
+	{
+		JMenu menu = new JMenu("Validation");
+		JMenuItem mi = new JMenuItem("Validate FSM");
+		mi.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				FSM_Model model = FSM_Model.getInstance();
+				String text;
+				if(model.isValid())
+					text = "This Finite State Machine is valid!";
+				else
+					text = "This Finite State Machine is invalid!";
+				JOptionPane.showMessageDialog((Component) view(), text, "FSM Validation", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		menu.add(mi);
+
+		return menu;
+	}
+	@Override
+	protected void createMenus(JMenuBar mb)
+	{
+		super.createMenus(mb);
+		mb.add(createValidationMenu());
+	}
+
 	/**
 	 * Creates all tools using Prototype
 	 *
@@ -85,8 +118,8 @@ public class AutomataApp extends DrawApplication
 		new_tool = new FSM_ConnectionTool(view(), new ZeroConnection());
 		palette.add(createToolButton(IMAGES + "CONN", "Zero Connection", new_tool));
 
-		new_tool = new DebugTool(view());
-		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
+//		new_tool = new DebugTool(view());
+//		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
 	}
 
 	/**
