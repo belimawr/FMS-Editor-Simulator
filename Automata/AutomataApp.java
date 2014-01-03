@@ -77,11 +77,52 @@ public class AutomataApp extends DrawApplication
 
 		return menu;
 	}
+
+	private JMenu createAbout()
+	{
+		JMenu menu = new JMenu("Help");
+		JMenuItem mi = new JMenuItem("About");
+		mi.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				FSM_Model model = FSM_Model.getInstance();
+				String text = "";
+
+				text += "Tiago's Finite State Machine Simulator.\n" +
+						"This software was developed as a coursework to the subject\n" +
+						"CS409: Software Architecture And Design\n" +
+						"at University of Strathclyde.\n" +
+						"Copyright (C) 2013  Tiago de França Queiroz\n\n";
+
+				text += "This program is free software: you can redistribute it and/or modify\n" +
+						"it under the terms of the GNU General Public License as published by\n" +
+						"the Free Software Foundation, either version 3 of the License, or\n" +
+						"(at your option) any later version.\n\n";
+
+				text += "This program is distributed in the hope that it will be useful,\n" +
+						"but WITHOUT ANY WARRANTY; without even the implied warranty of\n" +
+						"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" +
+						"GNU General Public License for more details.\n\n";
+
+				text += "You should have received a copy of the GNU General Public License\n" +
+						"along with this program.  If not, see <http://www.gnu.org/licenses/>.";
+
+				JOptionPane.showMessageDialog((Component) view(), text, "Tiago's FSM Licence", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		menu.add(mi);
+
+		return menu;
+	}
+
 	@Override
 	protected void createMenus(JMenuBar mb)
 	{
 		super.createMenus(mb);
 		mb.add(createValidationMenu());
+		mb.add(createAbout());
 	}
 
 	/**
@@ -98,25 +139,25 @@ public class AutomataApp extends DrawApplication
 		Tool new_tool;
 
 		new_tool = new ConnectedTextTool(view(), new TextFigure());
-		palette.add(createToolButton(IMAGES + "ATEXT", "Connected Text Tool", new_tool));
+		palette.add(createToolButton(IMAGES + "ATEXT", "Add text to figure/connection", new_tool));
 
 		new_tool = new OneAdder(view());
-		palette.add(createToolButton(IMAGES + "ELLIPSE", "New One Adder", new_tool));
+		palette.add(createToolButton(AUTOMATA_IMAGES + "ONE", "One State", new_tool));
 
 		new_tool = new ZeroAdder(view());
-		palette.add(createToolButton(IMAGES + "ELLIPSE", "New Zero Adder", new_tool));
+		palette.add(createToolButton(AUTOMATA_IMAGES + "ZERO", "Zero State", new_tool));
 
 		new_tool = new StartDecoratorTool(view());
 		palette.add(createToolButton(AUTOMATA_IMAGES + "START", "Start State", new_tool));
 
 		new_tool = new FinalStateDecoratorTool(view());
-		palette.add(createToolButton(AUTOMATA_IMAGES + "END", "End State Tool", new_tool));
+		palette.add(createToolButton(AUTOMATA_IMAGES + "END", "End State", new_tool));
 
 		new_tool = new FSM_ConnectionTool(view(), new OneConnection());
-		palette.add(createToolButton(IMAGES + "CONN", "One Connection", new_tool));
+		palette.add(createToolButton(AUTOMATA_IMAGES + "1CONN", "One Connection", new_tool));
 
 		new_tool = new FSM_ConnectionTool(view(), new ZeroConnection());
-		palette.add(createToolButton(IMAGES + "CONN", "Zero Connection", new_tool));
+		palette.add(createToolButton(AUTOMATA_IMAGES + "0CONN", "Zero Connection", new_tool));
 
 //		new_tool = new DebugTool(view());
 //		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
