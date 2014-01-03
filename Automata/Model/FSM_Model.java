@@ -1,5 +1,6 @@
 package Automata.Model;
 
+import Automata.Decorators.AutomataDecorator;
 import Automata.Figures.*;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.framework.FigureChangeEvent;
@@ -187,6 +188,11 @@ public class FSM_Model implements FigureChangeListener
 	@Override
 	public void figureRemoved(FigureChangeEvent e)
 	{
+		Figure f = e.getFigure();
+		if(f instanceof AutomataDecorator)
+			f = ((AutomataDecorator) f).getParent();
+
+		nodes.remove(f);
 //		Figure f = e.getFigure();
 //
 //		/* If it's a State, just remove it */
