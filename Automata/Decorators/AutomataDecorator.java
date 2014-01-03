@@ -37,6 +37,8 @@ public abstract class AutomataDecorator
 	protected AutomataDecorator(Figure figure)
 	{
 		super(figure);
+		if(figure instanceof AutomataDecorator)
+			parent = ((AutomataDecorator) figure).getParent();
 	}
 
 	private Figure get_fComponent()

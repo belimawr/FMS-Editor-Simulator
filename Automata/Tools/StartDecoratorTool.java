@@ -1,6 +1,10 @@
 package Automata.Tools;
 
+import Automata.Decorators.AutomataDecorator;
 import Automata.Decorators.StartStateDecorator;
+import Automata.Exceptions.Automata_Exception;
+import Automata.Model.FSM_Model;
+import Automata.Model.FSM_Node;
 import CH.ifa.draw.framework.DrawingView;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.tool.ActionTool;
@@ -44,14 +48,34 @@ public class StartDecoratorTool
 	@Override
 	public void action(Figure figure)
 	{
+		FSM_Model model = FSM_Model.getInstance();
+		FSM_Node node;
+
 		/* Remove the decorator */
 		if(figure instanceof StartStateDecorator)
 		{
 			Figure f = ((StartStateDecorator) figure).peelDecoration();
 			drawing().replace(figure, f);
+
+			model.setStart(null);
+		}
+		/* Do nothing */
+		else if(model.getStart() != null)
+		{
+			return;
 		}
 		/* Put the decorator */
 		else
+		{
+			Figure start = figure;
 			drawing().replace(figure, new StartStateDecorator(figure));
+
+			if(start instanceof AutomataDecorator)
+				start = ((AutomataDecorator) start).getParent();
+			node = model.getNode(start);
+			if(node == null)
+				throw new Automata_Exception("Start state is null: "+start);
+			model.setStart(node);
+		}
 	}
 }

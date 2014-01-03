@@ -4,6 +4,8 @@ import Automata.Decorators.AutomataDecorator;
 import Automata.Decorators.FinalStateDecorator;
 import Automata.Decorators.StartStateDecorator;
 import Automata.Figures.CountingFigure;
+import Automata.Model.FSM_Model;
+import Automata.Model.FSM_Node;
 import CH.ifa.draw.framework.DrawingView;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.tool.ActionTool;
@@ -49,10 +51,15 @@ public class FinalStateDecoratorTool
 	@Override
 	public void action(Figure figure)
 	{
+		FSM_Model model = FSM_Model.getInstance();
+		FSM_Node node;
+
 		/* Put decorator */
 		if(figure instanceof CountingFigure)
 		{
 			drawing().replace(figure, new FinalStateDecorator(figure));
+			node = model.getNode(figure);
+			node.setEnd(true);
 		}
 		else if(figure instanceof AutomataDecorator)
 		{
@@ -61,6 +68,8 @@ public class FinalStateDecoratorTool
 			{
 				Figure f = ((FinalStateDecorator) figure).peelDecoration();
 				drawing().replace(figure, f);
+				node = model.getNode(f);
+				node.setEnd(false);
 			}
 			/* Remove END Decorator */
 			else if(((AutomataDecorator) figure).getEndDecorator() != null &&
@@ -72,6 +81,9 @@ public class FinalStateDecoratorTool
 					f = ((AutomataDecorator) f).peelDecoration();
 				StartStateDecorator final_fig = new StartStateDecorator(f);
 				drawing().replace(figure, final_fig);
+
+				node = model.getNode(final_fig.getParent());
+				node.setEnd(false);
 			}
 			/* Put decorator in the right order */
 			else if(figure instanceof StartStateDecorator)
@@ -84,6 +96,9 @@ public class FinalStateDecoratorTool
 				StartStateDecorator final_dec = new StartStateDecorator(tmp);
 
 				drawing().replace(figure, final_dec);
+
+				node = model.getNode(final_dec.getParent());
+				node.setEnd(true);
 			}
 		}
 	}
