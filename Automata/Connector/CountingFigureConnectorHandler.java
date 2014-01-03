@@ -2,12 +2,11 @@ package Automata.Connector;
 
 import Automata.Figures.OneConnection;
 import CH.ifa.draw.connector.LocatorConnector;
-import CH.ifa.draw.framework.ConnectionFigure;
-import CH.ifa.draw.framework.Figure;
-import CH.ifa.draw.framework.Locator;
+import CH.ifa.draw.framework.*;
 import CH.ifa.draw.handle.ConnectionHandle;
 
 import java.awt.*;
+import java.util.Enumeration;
 
 /**
  * Author: Tiago de França Queiroz
@@ -72,5 +71,45 @@ public class CountingFigureConnectorHandler extends ConnectionHandle
 		r.grow(BORDER, BORDER);
 
 		return r;
+	}
+
+	/* Some copy paste with small modifications to allow self connection */
+	private ConnectionFigure createdConnection;
+	@Override
+	protected Connector findConnectionTarget(int x, int y, Drawing drawing)
+	{
+		Figure target = findConnectableFigure(x, y, drawing);
+		if ((target != null) && target.canConnect()
+//				&& !target.includes(owner())
+				&& createdConnection.canConnect(owner(), target))
+		{
+			return findConnector(x, y, target);
+		}
+		return null;
+	}
+
+	private Figure findConnectableFigure(int x, int y, Drawing drawing)
+	{
+		Enumeration<Figure> k = drawing.figuresReverse();
+		while (k.hasMoreElements()) {
+			Figure figure = k.nextElement();
+			if (!figure.includes(createdConnection) && figure.canConnect())
+			{
+				if (figure.containsPoint(x, y))
+					return figure;
+			}
+		}
+		return null;
+	}
+
+	/*
+	 * Overriding method to keep a copy of the created
+	 * figure as it is private on super class
+	 */
+	@Override
+	protected ConnectionFigure createConnection()
+	{
+		createdConnection =  (ConnectionFigure) super.createConnection();
+		return createdConnection;
 	}
 }
