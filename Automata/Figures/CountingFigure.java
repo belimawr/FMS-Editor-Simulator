@@ -5,11 +5,13 @@ import Automata.Handlers.WhiteNullHandler;
 import CH.ifa.draw.connector.LocatorConnector;
 import CH.ifa.draw.figure.EllipseFigure;
 import CH.ifa.draw.framework.ConnectionFigure;
+import CH.ifa.draw.framework.Connector;
 import CH.ifa.draw.framework.Handle;
-import CH.ifa.draw.handle.ConnectionHandle;
 import CH.ifa.draw.locator.RelativeLocator;
+import CH.ifa.draw.util.Geom;
 
 import java.awt.*;
+import java.util.Enumeration;
 import java.util.Vector;
 
 /**
@@ -39,6 +41,10 @@ public class CountingFigure extends EllipseFigure
 	static int counter = 0;
 	private int my_number;
 	private boolean state;
+
+	/* Connectors stuff */
+	private Vector<LocatorConnector> fConnectors = null;
+	private boolean fConnectorsVisible = false;
 
 	public CountingFigure(boolean state)
 	{
@@ -126,5 +132,70 @@ public class CountingFigure extends EllipseFigure
 			return String.format("%d-OneState", my_number);
 		else
 			return String.format("%d-ZeroState", my_number);
+	}
+
+	/*
+	 * Connector stuff to allow a 'nice'
+	 * self connection.
+	 *
+	 * Almost everything is copy past
+	 * from NodeFigure.
+	 */
+	private Connector findConnector(int x, int y)
+	{
+		// return closest connector
+		long min = Long.MAX_VALUE;
+		Connector closest = null;
+		Enumeration<LocatorConnector> e = connectors().elements();
+		while (e.hasMoreElements())
+		{
+			Connector c = e.nextElement();
+			Point p2 = Geom.center(c.displayBox());
+			long d = Geom.length2(x, y, p2.x, p2.y);
+			if (d < min) {
+				min = d;
+				closest = c;
+			}
+		}
+		return closest;
+	}
+
+	private void drawConnectors(Graphics g)
+	{
+		if (fConnectorsVisible)
+		{
+			Enumeration<LocatorConnector> e = connectors().elements();
+			while (e.hasMoreElements())
+				e.nextElement().draw(g);
+		}
+	}
+
+	private void createConnectors()
+	{
+		fConnectors = new Vector<LocatorConnector>(4);
+		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.north()) );
+		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.south()) );
+		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.west()) );
+		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.east()) );
+	}
+
+	@Override
+	public void connectorVisibility(boolean isVisible)
+	{
+		fConnectorsVisible = isVisible;
+		invalidate();
+	}
+
+	private Vector<LocatorConnector> connectors()
+	{
+		if (fConnectors == null)
+			createConnectors();
+		return fConnectors;
+	}
+
+	@Override
+	public Connector connectorAt(int x, int y)
+	{
+		return findConnector(x, y);
 	}
 }

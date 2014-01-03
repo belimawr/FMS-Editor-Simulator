@@ -1,5 +1,6 @@
 package Automata.Figures;
 
+import Automata.Decorators.BorderArrowTip;
 import Automata.Model.FSM_Model;
 import Automata.Model.FSM_Node;
 import CH.ifa.draw.figure.TextFigure;
@@ -36,6 +37,7 @@ public class OneConnection extends LineConnection
 		super();
 		fFrameColor = Color.blue;
 		setStartDecoration(null);
+		setEndDecoration(new BorderArrowTip(0.4, 20, 20));
 	}
 
 	/*
@@ -91,6 +93,41 @@ public class OneConnection extends LineConnection
 			return false;
 		else
 			return super.canConnect(start, end);
+	}
+
+	@Override
+	public void draw(Graphics g)
+	{
+		g.setColor(Color.green);
+		Point p1, p2;
+		for (int i = 0; i < fPoints.size() - 1; i++)
+		{
+			p1 = fPoints.elementAt(i);
+			p2 = fPoints.elementAt(i + 1);
+			g.drawLine(p1.x, p1.y, p2.x, p2.y);
+		}
+		g.setColor(getFrameColor());
+		decorate(g);
+	}
+
+	/*
+     * Private method needs to be copied
+     * when extending class...
+     */
+	private void decorate(Graphics g)
+	{
+		if (fStartDecoration != null)
+		{
+			Point p1 = fPoints.elementAt(0);
+			Point p2 = fPoints.elementAt(1);
+			fStartDecoration.draw(g, p1.x, p1.y, p2.x, p2.y);
+		}
+		if (fEndDecoration != null)
+		{
+			Point p3 = fPoints.elementAt(fPoints.size() - 2);
+			Point p4 = fPoints.elementAt(fPoints.size() - 1);
+			fEndDecoration.draw(g, p4.x, p4.y, p3.x, p3.y);
+		}
 	}
 
 	public String toString()

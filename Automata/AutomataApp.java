@@ -7,7 +7,6 @@ import CH.ifa.draw.figure.TextFigure;
 import CH.ifa.draw.framework.Tool;
 import CH.ifa.draw.palette.ToolButton;
 import CH.ifa.draw.tool.ConnectedTextTool;
-import CH.ifa.draw.tool.ConnectionTool;
 
 import javax.swing.*;
 
@@ -80,10 +79,10 @@ public class AutomataApp extends DrawApplication
 		new_tool = new FinalStateDecoratorTool(view());
 		palette.add(createToolButton(AUTOMATA_IMAGES + "END", "End State Tool", new_tool));
 
-		new_tool = new ConnectionTool(view(), new OneConnection());
+		new_tool = new FSM_ConnectionTool(view(), new OneConnection());
 		palette.add(createToolButton(IMAGES + "CONN", "One Connection", new_tool));
 
-		new_tool = new ConnectionTool(view(), new ZeroConnection());
+		new_tool = new FSM_ConnectionTool(view(), new ZeroConnection());
 		palette.add(createToolButton(IMAGES + "CONN", "Zero Connection", new_tool));
 
 		new_tool = new DebugTool(view());
