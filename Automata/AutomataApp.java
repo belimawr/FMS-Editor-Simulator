@@ -49,6 +49,7 @@ public class AutomataApp extends DrawApplication
 	public AutomataApp()
 	{
 		super("Tiago's FMS editor and simulator");
+		TextFigure.setCurrentFontSize(20);
 	}
 
 	/**

@@ -4,9 +4,11 @@ import Automata.Exceptions.Automata_Exception;
 import Automata.Figures.CountingFigure;
 import Automata.Model.FSM_Model;
 import Automata.Model.FSM_Node;
+import CH.ifa.draw.figure.TextFigure;
 import CH.ifa.draw.framework.DrawingView;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.tool.CreationTool;
+import CH.ifa.draw.util.TextHolder;
 
 /**
  * Author: Tiago de França Queiroz
@@ -65,7 +67,14 @@ public class OneAdder extends CreationTool
 		FSM_Model model = FSM_Model.getInstance();
 		model.insert(f, node);
 
-//		System.out.printf("CreatedFigure: %s\n", (f).toString());
+		int state = (f.getState()) ? 1 : 0;
+		String text = String.format("%d-S%d", state, f.getMy_number());
+
+		TextHolder text_figure = new TextFigure();
+		text_figure.setText(text);
+		text_figure.connect(f);
+		view().add((Figure) text_figure);
+
 		return f;
 	}
 }

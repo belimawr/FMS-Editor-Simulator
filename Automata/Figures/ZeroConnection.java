@@ -2,6 +2,7 @@ package Automata.Figures;
 
 import Automata.Model.FSM_Model;
 import Automata.Model.FSM_Node;
+import CH.ifa.draw.figure.TextFigure;
 import CH.ifa.draw.figure.connection.LineConnection;
 import CH.ifa.draw.framework.Figure;
 
@@ -80,6 +81,10 @@ public class ZeroConnection extends LineConnection
 	@Override
 	public boolean canConnect(Figure start, Figure end)
 	{
+		if(start instanceof TextFigure ||
+		   end instanceof TextFigure)
+			return false;
+
 		FSM_Node snode = FSM_Model.getInstance().getNode(start);
 
 		if(snode.getZero() != null)
