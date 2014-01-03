@@ -40,8 +40,6 @@ import java.util.*;
  */
 public class FSM_Model implements FigureChangeListener
 {
-	private static boolean valid;
-
 	private static FSM_Node start;
 
 	private Map<Figure, FSM_Node> nodes;
@@ -56,7 +54,6 @@ public class FSM_Model implements FigureChangeListener
 
 	public FSM_Model()
 	{
-		valid = false;
 		start = null;
 
 		nodes = new HashMap<Figure, FSM_Node>();
@@ -108,25 +105,15 @@ public class FSM_Model implements FigureChangeListener
 	public boolean isValid()
 	{
 		if(start == null)
-		{
-			valid = false;
 			return false;
-		}
 
-		valid = true;
 		Collection<FSM_Node> states = nodes.values();
-		if(valid)
-			return true;
-		else
-		{
-			for(FSM_Node n: states)
-				if(!n.isValid())
-				{
-					valid = false;
-					return false;
-				}
-		}
-		return valid;
+
+		for(FSM_Node n: states)
+			if(!n.isValid())
+				return false;
+
+		return true;
 	}
 
 	public static FSM_Model getInstance()
@@ -193,39 +180,6 @@ public class FSM_Model implements FigureChangeListener
 			f = ((AutomataDecorator) f).getParent();
 
 		nodes.remove(f);
-//		Figure f = e.getFigure();
-//
-//		/* If it's a State, just remove it */
-//		if(f instanceof CountingFigure || f instanceof StartState || f instanceof EndState)
-//		{
-//			nodes.remove(f);
-//			System.out.printf("Figure %s was removed\n", e.getFigure());
-//		}
-//		/* If it's a connection remove its link */
-//		else if(f instanceof OneConnection)
-//		{
-//			OneConnection of = (OneConnection) f;
-//			Figure start = of.startFigure();
-//			FSM_Node start_node = getNode(start);
-//
-//			if(start_node != null)
-//				start_node.setOne(null);
-//			System.out.printf("OneConnection %s -> %s removed\n", start, ((OneConnection) f).endFigure());
-//		}
-//		else if(f instanceof ZeroConnection)
-//		{
-//			ZeroConnection of = (ZeroConnection) f;
-//			Figure start = of.startFigure();
-//			FSM_Node start_node = getNode(start);
-//
-//			if(start_node != null)
-//				start_node.setZero(null);
-//			System.out.printf("ZeroConnection %s -> %s removed\n", start, ((ZeroConnection) f).endFigure());
-//		}
-//		else
-//		{
-//			System.out.printf("I don't know what to do with %s\n", f);
-//		}
 	}
 
 	@Override
