@@ -95,12 +95,12 @@ public class FSM_Node
 	public String toString()
 	{
 		if(zero != null && one != null)
-			return String.format("\"%s\": 0:{%s}, 1:{%s}", myFigure, zero.myFigure, one.myFigure);
+			return String.format("\"%s\": 0:{%s}, 1:{%s} Final: %b", myFigure, zero.myFigure, one.myFigure, end);
 		else if(zero == null && one != null)
-			return String.format("\"%s\": 0:{%s}, 1:{%s}", myFigure, zero, one.myFigure);
+			return String.format("\"%s\": 0:{%s}, 1:{%s} Final: %b", myFigure, zero, one.myFigure, end);
 		else if(zero != null && one == null)
-			return String.format("\"%s\": 0:{%s}, 1:{%s}", myFigure, zero.myFigure, one);
+			return String.format("\"%s\": 0:{%s}, 1:{%s} Final: %b", myFigure, zero.myFigure, one, end);
 		else
-			return String.format("\"%s\": 0:{%s}, 1:{%s}", myFigure, zero, one);
+			return String.format("\"%s\": 0:{%s}, 1:{%s} Final: %b", myFigure, zero, one, end);
 	}
 }
