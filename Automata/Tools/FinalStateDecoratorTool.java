@@ -52,7 +52,6 @@ public class FinalStateDecoratorTool
 		/* Put decorator */
 		if(figure instanceof CountingFigure)
 		{
-			System.out.printf("Putting FinalStateDecorator\n");
 			drawing().replace(figure, new FinalStateDecorator(figure));
 		}
 		else if(figure instanceof AutomataDecorator)
@@ -60,7 +59,6 @@ public class FinalStateDecoratorTool
 			/* Remove END decorator */
 			if(figure instanceof FinalStateDecorator)
 			{
-				System.out.printf("Removing FinalStateDecorator\n");
 				Figure f = ((FinalStateDecorator) figure).peelDecoration();
 				drawing().replace(figure, f);
 			}
@@ -69,7 +67,6 @@ public class FinalStateDecoratorTool
 					((AutomataDecorator) figure).getStartDecorator() != null &&
 					figure instanceof StartStateDecorator)
 			{
-				System.out.printf("Removing FinalStateDecorator underneath StartStateDecorator\n");
 				Figure f = ((StartStateDecorator) figure).peelDecoration();
 				while(!(f instanceof CountingFigure))
 					f = ((AutomataDecorator) f).peelDecoration();
@@ -79,7 +76,6 @@ public class FinalStateDecoratorTool
 			/* Put decorator in the right order */
 			else if(figure instanceof StartStateDecorator)
 			{
-				System.out.printf("Putting in the right order!\n");
 				Figure f = ((StartStateDecorator) figure).peelDecoration();
 				while(!(f instanceof CountingFigure))
 					f = ((AutomataDecorator) f).peelDecoration();
@@ -89,16 +85,12 @@ public class FinalStateDecoratorTool
 
 				drawing().replace(figure, final_dec);
 			}
-			else
-			{
-				System.out.printf("Error!\n");
-			}
 		}
-		else
-			System.out.printf("Class: %s", figure.getClass());
-
 	}
 
+	/*
+	 * Let the tool active
+	 */
 	@Override
 	public void mouseUp(MouseEvent e, int x, int y)
 	{
