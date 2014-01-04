@@ -40,21 +40,16 @@ public class CountingFigure extends EllipseFigure
 	private Rectangle display_box;
 	static int counter = 0;
 	private int my_number;
-	private boolean state;
 
 	/* Connectors stuff */
 	private Vector<LocatorConnector> fConnectors = null;
 	private boolean fConnectorsVisible = false;
 
-	public CountingFigure(boolean state)
+	public CountingFigure()
 	{
 		super();
-		this.state = state;
 		my_number = counter++;
-		if(state)
-			setAttribute("FillColor", Color.blue);
-		else
-			setAttribute("FillColor", Color.red);
+		setAttribute("FillColor", Color.cyan);
 	}
 
 	/**
@@ -121,17 +116,9 @@ public class CountingFigure extends EllipseFigure
 		return my_number;
 	}
 
-	public boolean getState()
-	{
-		return state;
-	}
-
 	public String toString()
 	{
-		if(state)
-			return String.format("%d-OneState", my_number);
-		else
-			return String.format("%d-ZeroState", my_number);
+		return String.format("S%d", my_number);
 	}
 
 	/*

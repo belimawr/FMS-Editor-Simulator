@@ -141,11 +141,8 @@ public class AutomataApp extends DrawApplication
 		new_tool = new ConnectedTextTool(view(), new TextFigure());
 		palette.add(createToolButton(IMAGES + "ATEXT", "Add text to figure/connection", new_tool));
 
-		new_tool = new OneAdder(view());
-		palette.add(createToolButton(AUTOMATA_IMAGES + "ONE", "One State", new_tool));
-
-		new_tool = new ZeroAdder(view());
-		palette.add(createToolButton(AUTOMATA_IMAGES + "ZERO", "Zero State", new_tool));
+		new_tool = new StateAdder(view());
+		palette.add(createToolButton(AUTOMATA_IMAGES + "ONE", "State", new_tool));
 
 		new_tool = new StartDecoratorTool(view());
 		palette.add(createToolButton(AUTOMATA_IMAGES + "START", "Start State", new_tool));
@@ -159,8 +156,8 @@ public class AutomataApp extends DrawApplication
 		new_tool = new FSM_ConnectionTool(view(), new ZeroConnection());
 		palette.add(createToolButton(AUTOMATA_IMAGES + "0CONN", "Zero Connection", new_tool));
 
-//		new_tool = new DebugTool(view());
-//		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
+		new_tool = new DebugTool(view());
+		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
 	}
 
 	/**

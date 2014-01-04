@@ -183,13 +183,15 @@ public class FSM_Model implements FigureChangeListener
 		{
 			Figure start = ((OneConnection) f).startFigure();
 			FSM_Node node = nodes.get(start);
-			node.setOne(null);
+			if(node != null)
+				node.setOne(null);
 		}
 		else if(f instanceof ZeroConnection)
 		{
 			Figure start = ((ZeroConnection) f).startFigure();
 			FSM_Node node = nodes.get(start);
-			node.setZero(null);
+			if(node != null)
+				node.setZero(null);
 		}
 	}
 

@@ -31,7 +31,7 @@ import CH.ifa.draw.util.TextHolder;
  * You should have received a copy of the GNU General Public License
  * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
-public class OneAdder extends CreationTool
+public class StateAdder extends CreationTool
 {
 	/*
 	 * This Tool does not use a prototype as I want
@@ -39,7 +39,7 @@ public class OneAdder extends CreationTool
 	 * (to label them) and to do so I need a completely
 	 * new object every time a new figure is created.
 	 */
-	public OneAdder(DrawingView view)
+	public StateAdder(DrawingView view)
 	{
 		super(view);
 	}
@@ -48,7 +48,7 @@ public class OneAdder extends CreationTool
 	 * Just to be sure that this method is never
 	 * going to be used.
 	 */
-	public OneAdder(DrawingView view, Figure prototype)
+	public StateAdder(DrawingView view, Figure prototype)
 	{
 		super(view, prototype);
 		throw new Automata_Exception("Prototype cannot be used!");
@@ -61,14 +61,13 @@ public class OneAdder extends CreationTool
 	@Override
 	protected Figure createFigure()
 	{
-		CountingFigure f = new CountingFigure(true);
+		CountingFigure f = new CountingFigure();
 		FSM_Node node = new FSM_Node(f);
 
 		FSM_Model model = FSM_Model.getInstance();
 		model.insert(f, node);
 
-		int state = (f.getState()) ? 1 : 0;
-		String text = String.format("%d-S%d", state, f.getMy_number());
+		String text = String.format("S%d", f.getMy_number());
 
 		TextHolder text_figure = new TextFigure();
 		text_figure.setText(text);
