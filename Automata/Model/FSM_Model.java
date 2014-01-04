@@ -2,6 +2,7 @@ package Automata.Model;
 
 import Automata.Decorators.AutomataDecorator;
 import Automata.Figures.*;
+import CH.ifa.draw.figure.connection.LineConnection;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.framework.FigureChangeEvent;
 import CH.ifa.draw.framework.FigureChangeListener;
@@ -171,10 +172,25 @@ public class FSM_Model implements FigureChangeListener
 	public void figureRemoved(FigureChangeEvent e)
 	{
 		Figure f = e.getFigure();
-		if(f instanceof AutomataDecorator)
-			f = ((AutomataDecorator) f).getParent();
+		if(f instanceof CountingFigure || f instanceof AutomataDecorator)
+		{
+			if(f instanceof AutomataDecorator)
+				f = ((AutomataDecorator) f).getParent();
 
-		nodes.remove(f);
+			nodes.remove(f);
+		}
+		else if(f instanceof OneConnection)
+		{
+			Figure start = ((OneConnection) f).startFigure();
+			FSM_Node node = nodes.get(start);
+			node.setOne(null);
+		}
+		else if(f instanceof ZeroConnection)
+		{
+			Figure start = ((ZeroConnection) f).startFigure();
+			FSM_Node node = nodes.get(start);
+			node.setZero(null);
+		}
 	}
 
 	@Override
