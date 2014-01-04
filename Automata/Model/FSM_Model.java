@@ -64,7 +64,6 @@ public class FSM_Model implements FigureChangeListener
 		nodes.put(key, node);
 		/* Add this as a listener to the figure*/
 		key.addFigureChangeListener(this);
-		System.out.printf("FSM_Model: (%s, %s) inserted\n", key, node);
 	}
 
 	public void replace(Figure fold, Figure fnew)
@@ -72,8 +71,6 @@ public class FSM_Model implements FigureChangeListener
 		FSM_Node node = nodes.remove(fold);
 		node.setMyFigure(fnew);
 		nodes.put(fnew, node);
-
-		System.out.printf("Replacing: %s -> %s\n", fold, fnew);
 	}
 
 	public boolean connectOne(Figure start, Figure end)
@@ -85,7 +82,6 @@ public class FSM_Model implements FigureChangeListener
 
 		nstart.setOne(nend);
 
-		System.out.printf("1: \"%s\"->\"%s\"\n", start, end);
 		return true;
 	}
 
@@ -98,7 +94,6 @@ public class FSM_Model implements FigureChangeListener
 
 		nstart.setZero(nend);
 
-		System.out.printf("1: \"%s\"->\"%s\"\n", start, end);
 		return true;
 	}
 
