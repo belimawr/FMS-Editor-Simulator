@@ -98,7 +98,6 @@ public class AutomataApp extends DrawApplication
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				FSM_Model model = FSM_Model.getInstance();
 				String text = "";
 
 				text += "Tiago's Finite State Machine Simulator.\n" +
