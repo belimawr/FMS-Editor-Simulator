@@ -1,13 +1,21 @@
 package Automata.Model;
 
 import Automata.Decorators.AutomataDecorator;
-import Automata.Figures.*;
-import CH.ifa.draw.figure.connection.LineConnection;
+import Automata.Decorators.CurrentStateDecorator;
+import Automata.Figures.CountingFigure;
+import Automata.Figures.OneConnection;
+import Automata.Figures.ZeroConnection;
+import CH.ifa.draw.figure.TextFigure;
+import CH.ifa.draw.framework.Drawing;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.framework.FigureChangeEvent;
 import CH.ifa.draw.framework.FigureChangeListener;
 
-import java.util.*;
+import javax.swing.*;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -43,7 +51,15 @@ public class FSM_Model implements FigureChangeListener
 {
 	private static FSM_Node start;
 
+	private TextFigure tape_storage;
+
+	private FSM_Node current;
+
 	private Map<Figure, FSM_Node> nodes;
+
+	private Drawing drawing;
+
+	private CurrentStateDecorator selected;
 
 	/*
 	 * Singleton design pattern.
@@ -56,6 +72,9 @@ public class FSM_Model implements FigureChangeListener
 	public FSM_Model()
 	{
 		start = null;
+		tape_storage = null;
+		current = null;
+		selected = null;
 
 		nodes = new HashMap<Figure, FSM_Node>();
 	}
@@ -112,6 +131,125 @@ public class FSM_Model implements FigureChangeListener
 		return true;
 	}
 
+	public void step()
+	{
+		String tape = tape_storage.getText();
+		if(selected != null)
+		{
+			Figure f = selected.peelDecoration();
+			drawing.replace(selected, f);
+		}
+		if(current == null)
+		{
+			current = start;
+			System.out.printf("Starting. Tape: %s\nStart State: %s\n", tape, current);
+		}
+
+		int c = next_character();
+		System.out.printf("Read: %d\n", c);
+		switch(c)
+		{
+			case 1:
+				current = current.getOne();
+				System.out.printf("ActualState: %s\nTape: %s\n", current.getMyFigure(), tape);
+				break;
+			case 0:
+				current = current.getZero();
+				System.out.printf("ActualState: %s\nTape: %s\n", current.getMyFigure(), tape);
+				break;
+			case -1:
+				current = null;
+				break;
+		}
+		if(current != null)
+		{
+			Figure fcurrent = find_figure(current);
+			if(fcurrent != null)
+			{
+				CurrentStateDecorator dec = new CurrentStateDecorator(fcurrent);
+				drawing.replace(fcurrent, dec);
+				System.out.printf("CurrentFigure: %s -> %s\n", fcurrent, dec);
+				selected = dec;
+			}
+		}
+		if(tape.length() == 0 && current != null)
+		{
+			tape_storage.invalidate();
+			drawing.remove(tape_storage);
+			tape_storage.changed();
+			current = null;
+		}
+	}
+
+	private Figure find_figure(FSM_Node node)
+	{
+		Enumeration<Figure> figures = drawing.figures();
+		Figure current;
+
+		while(figures.hasMoreElements())
+		{
+			current = figures.nextElement();
+			if(current instanceof CountingFigure)
+			{
+				if(current == node.getMyFigure())
+					return current;
+			}
+			else if(current instanceof AutomataDecorator)
+			{
+				if(((AutomataDecorator) current).getParent() == node.getMyFigure())
+					return current;
+			}
+		}
+		return null;
+	}
+
+	int next_character()
+	{
+		String tape = tape_storage.getText();
+		if(tape.length() == 0)
+			return -1;
+
+		char c = tape.charAt(tape.length() - 1);
+		tape = tape.substring(0, tape.length() - 1);
+		tape_storage.setText(tape);
+
+		if(c == '1')
+			return 1;
+		else if (c == '0')
+			return 0;
+		else
+		{
+			String text = String.format("'%c' is a invalid characrer!", c);
+			JOptionPane.showMessageDialog(null, text, "Error!", JOptionPane.ERROR_MESSAGE);
+			return -1;
+		}
+	}
+
+	public void setTape_storage(TextFigure tape_storage)
+	{
+		this.tape_storage = tape_storage;
+
+		current = null;
+		if(selected != null)
+		{
+			Figure f = selected.peelDecoration();
+			drawing.replace(selected, f);
+		}
+		Figure fcurrent = find_figure(start);
+		if(fcurrent != null)
+		{
+			CurrentStateDecorator dec = new CurrentStateDecorator(fcurrent);
+			drawing.replace(fcurrent, dec);
+			System.out.printf("CurrentFigure: %s -> %s\n", fcurrent, dec);
+			selected = dec;
+		}
+	}
+
+	public TextFigure getTape_storage()
+	{
+		return tape_storage;
+	}
+
 	public static FSM_Model getInstance()
 	{
 		return me;
@@ -132,6 +270,11 @@ public class FSM_Model implements FigureChangeListener
 		FSM_Model.start = start;
 	}
 
+	public void setDrawing(Drawing drawing)
+	{
+		this.drawing = drawing;
+	}
+
 	public void print_debug()
 	{
 		int i = 0;
@@ -144,7 +287,6 @@ public class FSM_Model implements FigureChangeListener
 		System.out.printf("StartState: %s\n", start);
 		System.out.printf("Is model valid: %s\n", isValid());
 	}
-
 
 	/*
 	 * FigureChangeListener methods.

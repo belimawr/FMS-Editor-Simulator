@@ -5,9 +5,11 @@ import Automata.Model.FSM_Model;
 import Automata.Tools.*;
 import CH.ifa.draw.application.DrawApplication;
 import CH.ifa.draw.figure.TextFigure;
+import CH.ifa.draw.framework.Drawing;
 import CH.ifa.draw.framework.Tool;
 import CH.ifa.draw.palette.ToolButton;
 import CH.ifa.draw.tool.ConnectedTextTool;
+import CH.ifa.draw.tool.TextTool;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,6 +55,15 @@ public class AutomataApp extends DrawApplication
 	{
 		super("Tiago's FMS editor and simulator");
 		TextFigure.setCurrentFontSize(20);
+	}
+
+	@Override
+	protected Drawing createDrawing()
+	{
+		Drawing d =  super.createDrawing();
+
+		FSM_Model.getInstance().setDrawing(d);
+		return d;
 	}
 
 	private JMenu createValidationMenu()
@@ -109,7 +120,8 @@ public class AutomataApp extends DrawApplication
 				text += "You should have received a copy of the GNU General Public License\n" +
 						"along with this program.  If not, see <http://www.gnu.org/licenses/>.";
 
-				JOptionPane.showMessageDialog((Component) view(), text, "Tiago's FSM Licence", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog((Component) view(), text, "Tiago's FSM Licence",
+				                              JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		menu.add(mi);
@@ -141,6 +153,9 @@ public class AutomataApp extends DrawApplication
 		new_tool = new ConnectedTextTool(view(), new TextFigure());
 		palette.add(createToolButton(IMAGES + "ATEXT", "Add text to figure/connection", new_tool));
 
+		new_tool = new TextTool(view(), new TextFigure());
+		palette.add(createToolButton(IMAGES + "TEXT", "Text Tool", new_tool));
+
 		new_tool = new StateAdder(view());
 		palette.add(createToolButton(AUTOMATA_IMAGES + "ONE", "State", new_tool));
 
@@ -156,8 +171,15 @@ public class AutomataApp extends DrawApplication
 		new_tool = new FSM_ConnectionTool(view(), new ZeroConnection());
 		palette.add(createToolButton(AUTOMATA_IMAGES + "0CONN", "Zero Connection", new_tool));
 
-		new_tool = new DebugTool(view());
-		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
+		new_tool = new InputStringSelector(view());
+		palette.add(createToolButton(IMAGES + "TEXT", "Set Input String", new_tool));
+
+		new_tool = new StepTool(view());
+		palette.add(createToolButton(IMAGES + "PERT", "Read Character", new_tool));
+
+//		new_tool = new DebugTool(view());
+//		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
+
 	}
 
 	/**
