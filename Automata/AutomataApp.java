@@ -172,10 +172,10 @@ public class AutomataApp extends DrawApplication
 		palette.add(createToolButton(AUTOMATA_IMAGES + "0CONN", "Zero Connection", new_tool));
 
 		new_tool = new InputStringSelector(view());
-		palette.add(createToolButton(IMAGES + "TEXT", "Set Input String", new_tool));
+		palette.add(createToolButton(AUTOMATA_IMAGES + "R", "Set Input String", new_tool));
 
 		new_tool = new StepTool(view());
-		palette.add(createToolButton(IMAGES + "PERT", "Read Character", new_tool));
+		palette.add(createToolButton(AUTOMATA_IMAGES + "S", "Read Character", new_tool));
 
 //		new_tool = new DebugTool(view());
 //		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
