@@ -221,8 +221,8 @@ public class AutomataApp extends DrawApplication
 		new_tool = new StepTool(view());
 		palette.add(createToolButton(AUTOMATA_IMAGES + "S", "Read Character", new_tool));
 
-		new_tool = new DebugTool(view());
-		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
+//		new_tool = new DebugTool(view());
+//		palette.add(createToolButton(IMAGES + "SEL", "Debug Tool", new_tool));
 
 	}
 
