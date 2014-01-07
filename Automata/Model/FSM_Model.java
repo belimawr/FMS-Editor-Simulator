@@ -172,22 +172,16 @@ public class FSM_Model implements FigureChangeListener
 		}
 
 		if(current == null)
-		{
 			current = start;
-			System.out.printf("Starting. Tape: %s\nStart State: %s\n", tape, current);
-		}
 
 		int c = next_character();
-		System.out.printf("Read: %d\n", c);
 		switch(c)
 		{
 			case 1:
 				current = current.getOne();
-				System.out.printf("ActualState: %s\nTape: %s\n", current.getMyFigure(), tape);
 				break;
 			case 0:
 				current = current.getZero();
-				System.out.printf("ActualState: %s\nTape: %s\n", current.getMyFigure(), tape);
 				break;
 			case -1:
 				current = null;
@@ -200,7 +194,6 @@ public class FSM_Model implements FigureChangeListener
 			{
 				CurrentStateDecorator dec = new CurrentStateDecorator(fcurrent);
 				drawing.replace(fcurrent, dec);
-				System.out.printf("CurrentFigure: %s -> %s\n", fcurrent, dec);
 				selected = dec;
 			}
 		}
@@ -276,7 +269,6 @@ public class FSM_Model implements FigureChangeListener
 		{
 			CurrentStateDecorator dec = new CurrentStateDecorator(fcurrent);
 			drawing.replace(fcurrent, dec);
-			System.out.printf("CurrentFigure: %s -> %s\n", fcurrent, dec);
 			selected = dec;
 		}
 	}
