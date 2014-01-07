@@ -10,6 +10,8 @@ import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.tool.CreationTool;
 import CH.ifa.draw.util.TextHolder;
 
+import java.awt.event.MouseEvent;
+
 /**
  * Author: Tiago de França Queiroz
  * Date: 22/12/13
@@ -33,6 +35,7 @@ import CH.ifa.draw.util.TextHolder;
  */
 public class StateAdder extends CreationTool
 {
+	private TextHolder text_figure;
 	/*
 	 * This Tool does not use a prototype as I want
 	 * to keep track of the number of states created
@@ -69,11 +72,19 @@ public class StateAdder extends CreationTool
 
 		String text = String.format("S%d", f.getMy_number());
 
-		TextHolder text_figure = new TextFigure();
+		text_figure = new TextFigure();
 		text_figure.setText(text);
 		text_figure.connect(f);
 		view().add((Figure) text_figure);
 
 		return f;
+	}
+
+	@Override
+	public void mouseUp(MouseEvent e, int x, int y)
+	{
+		super.mouseUp(e, x, y);
+		drawing().bringToFront((Figure) text_figure);
+		view().checkDamage();
 	}
 }
