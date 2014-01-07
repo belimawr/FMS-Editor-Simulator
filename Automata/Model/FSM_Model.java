@@ -7,12 +7,10 @@ import Automata.Figures.CountingFigure;
 import Automata.Figures.OneConnection;
 import Automata.Figures.ZeroConnection;
 import CH.ifa.draw.figure.TextFigure;
-import CH.ifa.draw.framework.Drawing;
-import CH.ifa.draw.framework.Figure;
-import CH.ifa.draw.framework.FigureChangeEvent;
-import CH.ifa.draw.framework.FigureChangeListener;
+import CH.ifa.draw.framework.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -62,6 +60,8 @@ public class FSM_Model implements FigureChangeListener
 
 	private CurrentStateDecorator selected;
 
+	DrawingView view;
+
 	/*
 	 * Singleton design pattern.
 	 * It is used because different classes
@@ -77,19 +77,36 @@ public class FSM_Model implements FigureChangeListener
 		current = null;
 		selected = null;
 		drawing = null;
+		view = null;
 
 		nodes = new HashMap<Figure, FSM_Node>();
 	}
 
-	public void reset(Drawing d)
+	public void reset(Drawing d, DrawingView v)
 	{
 		start = null;
 		tape_storage = null;
 		current = null;
 		selected = null;
 		drawing = d;
+		view = v;
 
 		nodes = new HashMap<Figure, FSM_Node>();
+	}
+
+	public void stop_simulation()
+	{
+		if(selected != null)
+		{
+			Figure f = selected.peelDecoration();
+			drawing.replace(selected, f);
+		}
+		if(tape_storage != null)
+			tape_storage.setAttribute("TextColor", Color.black);
+		current = null;
+		tape_storage = null;
+		selected = null;
+		view.checkDamage();
 	}
 
 	public void insert(Figure key, FSM_Node node)
@@ -147,11 +164,13 @@ public class FSM_Model implements FigureChangeListener
 	public void step()
 	{
 		String tape = tape_storage.getText();
+
 		if(selected != null)
 		{
 			Figure f = selected.peelDecoration();
 			drawing.replace(selected, f);
 		}
+
 		if(current == null)
 		{
 			current = start;
@@ -187,11 +206,11 @@ public class FSM_Model implements FigureChangeListener
 		}
 		if(tape.length() == 0 && current != null)
 		{
-			tape_storage.invalidate();
 			drawing.remove(tape_storage);
-			tape_storage.changed();
+			view.checkDamage();
 			current = null;
 		}
+		view.checkDamage();
 	}
 
 	private Figure find_figure(FSM_Node node)
@@ -240,7 +259,11 @@ public class FSM_Model implements FigureChangeListener
 
 	public void setTape_storage(TextFigure tape_storage)
 	{
+		if(this.tape_storage != null)
+			this.tape_storage.setAttribute("TextColor", Color.black);
+
 		this.tape_storage = tape_storage;
+		tape_storage.setAttribute("TextColor", Color.blue);
 
 		current = null;
 		if(selected != null)
@@ -331,7 +354,7 @@ public class FSM_Model implements FigureChangeListener
 		{
 			/* remove the start state */
 			if(f instanceof StartStateDecorator)
-				FSM_Model.getInstance().setStart(null);
+				setStart(null);
 
 			if(f instanceof AutomataDecorator)
 				f = ((AutomataDecorator) f).getParent();

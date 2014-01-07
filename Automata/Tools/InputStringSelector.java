@@ -6,6 +6,9 @@ import CH.ifa.draw.framework.DrawingView;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.tool.ActionTool;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * Author: Tiago de França Queiroz
  * Date: 04/01/14
@@ -41,7 +44,12 @@ public class InputStringSelector
 		if(figure instanceof TextFigure)
 		{
 			FSM_Model model = FSM_Model.getInstance();
-			model.setTape_storage((TextFigure) figure);
+
+			if(model.isValid())
+				model.setTape_storage((TextFigure) figure);
+			else
+				JOptionPane.showMessageDialog((Component) view(), "FSM is invalid!", "Error!",
+				                              JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

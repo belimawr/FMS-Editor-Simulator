@@ -62,13 +62,13 @@ public class AutomataApp extends DrawApplication
 	{
 		Drawing d =  super.createDrawing();
 
-		FSM_Model.getInstance().reset(d);
+		FSM_Model.getInstance().reset(d, view());
 		return d;
 	}
 
 	private JMenu createValidationMenu()
 	{
-		JMenu menu = new JMenu("Validation");
+		JMenu menu = new JMenu("Simulation");
 		JMenuItem mi = new JMenuItem("Validate FSM");
 		mi.addActionListener(new ActionListener()
 		{
@@ -82,6 +82,18 @@ public class AutomataApp extends DrawApplication
 				else
 					text = "This Finite State Machine is invalid!";
 				JOptionPane.showMessageDialog((Component) view(), text, "FSM Validation", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		menu.add(mi);
+
+		mi = new JMenuItem("Stop Simulation");
+		mi.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				FSM_Model.getInstance().stop_simulation();
+				view().checkDamage();
 			}
 		});
 		menu.add(mi);
