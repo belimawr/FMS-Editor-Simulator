@@ -163,6 +163,7 @@ public class FSM_Model implements FigureChangeListener
 
 	public void step()
 	{
+		view.freezeView();
 		String tape = tape_storage.getText();
 
 		if(selected != null)
@@ -204,6 +205,7 @@ public class FSM_Model implements FigureChangeListener
 			current = null;
 		}
 		view.checkDamage();
+		view.unfreezeView();
 	}
 
 	private Figure find_figure(FSM_Node node)
@@ -244,8 +246,9 @@ public class FSM_Model implements FigureChangeListener
 			return 0;
 		else
 		{
-			String text = String.format("'%c' is a invalid characrer!", c);
+			String text = String.format("'%c' is a invalid character!", c);
 			JOptionPane.showMessageDialog(null, text, "Error!", JOptionPane.ERROR_MESSAGE);
+			stop_simulation();
 			return -1;
 		}
 	}
