@@ -58,7 +58,7 @@ public class CurrentStateDecorator extends AutomataDecorator
 	{
 		Rectangle r = displayBox();
 
-		g.setColor(Color.magenta);
+		g.setColor(Color.white);
 		g.fillOval(r.x - atmosphere_size().x/2,
 		           r.y - atmosphere_size().y/2,
 		           r.width + atmosphere_size().x,
