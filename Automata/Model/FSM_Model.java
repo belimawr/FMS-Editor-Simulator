@@ -76,6 +76,18 @@ public class FSM_Model implements FigureChangeListener
 		tape_storage = null;
 		current = null;
 		selected = null;
+		drawing = null;
+
+		nodes = new HashMap<Figure, FSM_Node>();
+	}
+
+	public void reset(Drawing d)
+	{
+		start = null;
+		tape_storage = null;
+		current = null;
+		selected = null;
+		drawing = d;
 
 		nodes = new HashMap<Figure, FSM_Node>();
 	}

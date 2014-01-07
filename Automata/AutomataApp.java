@@ -62,7 +62,7 @@ public class AutomataApp extends DrawApplication
 	{
 		Drawing d =  super.createDrawing();
 
-		FSM_Model.getInstance().setDrawing(d);
+		FSM_Model.getInstance().reset(d);
 		return d;
 	}
 
@@ -121,6 +121,39 @@ public class AutomataApp extends DrawApplication
 
 				JOptionPane.showMessageDialog((Component) view(), text, "Tiago's FSM Licence",
 				                              JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		menu.add(mi);
+
+		return menu;
+	}
+
+	/*
+	 * Copy past from super class.
+	 * Bugged menu options removed
+	 */
+	@Override
+	protected JMenu createFileMenu()
+	{
+		JMenu menu = new JMenu("File");
+		JMenuItem mi = new JMenuItem("New", 'n');
+		mi.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent event)
+			{
+				promptNew();
+			}
+		});
+		menu.add(mi);
+
+		mi = new JMenuItem("Exit");
+		mi.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent event)
+			{
+				exit();
 			}
 		});
 		menu.add(mi);
