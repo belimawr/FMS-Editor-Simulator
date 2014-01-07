@@ -67,7 +67,11 @@ public class StartDecoratorTool extends ActionTool
 		else
 		{
 			Figure start = figure;
-			drawing().replace(figure, new StartStateDecorator(figure));
+			StartStateDecorator dec = new StartStateDecorator(figure);
+
+			/* Add the model as listener */
+			dec.addFigureChangeListener(FSM_Model.getInstance());
+			drawing().replace(figure, dec);
 
 			if(start instanceof AutomataDecorator)
 				start = ((AutomataDecorator) start).getParent();

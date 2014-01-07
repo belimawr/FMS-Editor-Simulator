@@ -2,6 +2,7 @@ package Automata.Model;
 
 import Automata.Decorators.AutomataDecorator;
 import Automata.Decorators.CurrentStateDecorator;
+import Automata.Decorators.StartStateDecorator;
 import Automata.Figures.CountingFigure;
 import Automata.Figures.OneConnection;
 import Automata.Figures.ZeroConnection;
@@ -316,6 +317,10 @@ public class FSM_Model implements FigureChangeListener
 		Figure f = e.getFigure();
 		if(f instanceof CountingFigure || f instanceof AutomataDecorator)
 		{
+			/* remove the start state */
+			if(f instanceof StartStateDecorator)
+				FSM_Model.getInstance().setStart(null);
+
 			if(f instanceof AutomataDecorator)
 				f = ((AutomataDecorator) f).getParent();
 
