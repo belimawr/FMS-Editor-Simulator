@@ -6,12 +6,15 @@ import Automata.Model.FSM_Node;
 import CH.ifa.draw.figure.ArrowTip;
 import CH.ifa.draw.figure.TextFigure;
 import CH.ifa.draw.figure.connection.LineConnection;
+import CH.ifa.draw.framework.Connector;
 import CH.ifa.draw.framework.Figure;
+import CH.ifa.draw.framework.FigureChangeEvent;
 import CH.ifa.draw.framework.Handle;
 import CH.ifa.draw.handle.PolyLineHandle;
 import CH.ifa.draw.locator.RelativeLocator;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.Vector;
 
 /**
@@ -37,9 +40,14 @@ import java.util.Vector;
  */
 public class ZeroConnection extends LineConnection
 {
+	private final int ARC_SIZE = 30;
+	private Rectangle displaybox;
+	private boolean loop;
+
 	public ZeroConnection()
 	{
 		super();
+		loop = false;
 		fFrameColor = Color.red;
 		setStartDecoration(null);
 		setEndDecoration(new ArrowTip(0.4, 15, 15));
@@ -66,17 +74,13 @@ public class ZeroConnection extends LineConnection
 	}
 
 	/*
-		 * If the connection already exists, does not allow
-		 * create a new one.
-		 *
-		 * Replace the connection is not easy because
-		 * there are too many indirect calls. :(
-		 */
+	 * If the connection already exists, does not allow
+	 * create a new one.
+	 */
 	@Override
 	public boolean canConnect(Figure start, Figure end)
 	{
-		if(start instanceof TextFigure ||
-		   end instanceof TextFigure)
+		if(start instanceof TextFigure || end instanceof TextFigure)
 			return false;
 
 		FSM_Node snode = FSM_Model.getInstance().getNode(start);
@@ -95,10 +99,122 @@ public class ZeroConnection extends LineConnection
 	@Override
 	public Vector<Handle> handles()
 	{
-		Vector<Handle> handles = new Vector<Handle>(fPoints.size());
-		handles.addElement(new WhiteNullHandler(this, RelativeLocator.center()));
-		for (int i = 1; i < fPoints.size() - 1; i++)
-			handles.addElement(new PolyLineHandle(this, locator(i), i));
-		return handles;
+		if(loop)
+		{
+			Vector<Handle> handles = new Vector<Handle>();
+			handles.addElement(new WhiteNullHandler(this, RelativeLocator.north()));
+			handles.addElement(new WhiteNullHandler(this, RelativeLocator.east()));
+			handles.addElement(new WhiteNullHandler(this, RelativeLocator.west()));
+			return handles;
+		}
+		else
+			return super.handles();
+	}
+
+	@Override
+	public void draw(Graphics g)
+	{
+		if(loop)
+		{
+			Rectangle r = displayBox();
+			Point centre = this.center();
+			int radius = r.height/2 - ARC_SIZE;
+
+			g.setColor(fFrameColor);
+			g.drawArc(r.x, r.y, r.width, r.height, 0, 180);
+			g.drawLine(centre.x + radius, centre.y, centre.x + radius + ARC_SIZE, centre.y);
+			draw_end_triangle(g, centre, radius);
+			return;
+		}
+		else
+			super.draw(g);
+	}
+
+	private void draw_end_triangle(Graphics g, Point centre, int radius)
+	{
+		Polygon triangle = new Polygon();
+		Point p1, p2, p3;
+
+		p1 = new Point(centre.x - radius, centre.y);
+		p2 = new Point(p1.x - ARC_SIZE + 20, p1.y + 5);
+		p3 = new Point(p1.x - ARC_SIZE + 20, p1.y - 5);
+
+		triangle.addPoint(p1.x, p1.y);
+		triangle.addPoint(p2.x, p2.y);
+		triangle.addPoint(p3.x, p3.y);
+		g.fillPolygon(triangle);
+		g.drawLine(p1.x, p1.y, p1.x - ARC_SIZE, p1.y);
+	}
+
+	@Override
+	public Rectangle displayBox()
+	{
+		if(loop)
+		{
+			Rectangle r = fStart.owner().displayBox();
+			r.grow(ARC_SIZE, ARC_SIZE);
+			displaybox = r;
+			return displaybox;
+		}
+		else
+			return super.displayBox();
+	}
+
+	@Override
+	public void figureInvalidated(FigureChangeEvent e)
+	{
+		if(loop)
+		{
+			Rectangle r = e.getInvalidatedRectangle();
+			Rectangle d = displayBox();
+			d.grow(5, 5);
+			r.add(d);
+			super.figureInvalidated(new FigureChangeEvent(e.getFigure(), r));
+		}
+		else
+			super.figureInvalidated(e);
+	}
+
+	@Override
+	public void connectEnd(Connector end)
+	{
+		super.connectEnd(end);
+		if(fStart.owner() == fEnd.owner())
+			loop = true;
+	}
+
+	/**
+	 * If true, the figure is selected :D \o/
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	@Override
+	public boolean containsPoint(int x, int y)
+	{
+		if(loop)
+		{
+			Rectangle rect = new Rectangle(displayBox());
+			Ellipse2D elli = new Ellipse2D.Float(rect.x, rect.y, rect.width, rect.height);
+
+			rect.setBounds(rect.x, rect.y, rect.width, rect.height/2);
+
+			boolean r, e, i;
+
+			e = elli.contains(x, y);
+			r = rect.contains(x, y);
+			i = e && r;
+
+			/*
+			 * If the point is inside the state and inside
+			 * the arc returns false, otherwise return i
+			 */
+			if(fEnd.owner().displayBox().contains(x, y) && i)
+				return false;
+			else
+				return i;
+		}
+		else
+			return super.containsPoint(x, y);
 	}
 }
