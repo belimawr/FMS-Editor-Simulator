@@ -157,13 +157,20 @@ public class CountingFigure extends EllipseFigure
 		}
 	}
 
+	@Override
+	public void drawFrame(Graphics g)
+	{
+		super.drawFrame(g);
+		drawConnectors(g);
+	}
+
 	private void createConnectors()
 	{
 		fConnectors = new Vector<LocatorConnector>(4);
-		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.north()) );
-		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.south()) );
-		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.west()) );
-		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.east()) );
+		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.north()));
+		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.south()));
+		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.west()));
+		fConnectors.addElement(new LocatorConnector(this, RelativeLocator.east()));
 	}
 
 	@Override
