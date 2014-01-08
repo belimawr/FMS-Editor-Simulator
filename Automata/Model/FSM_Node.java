@@ -30,14 +30,6 @@ public class FSM_Node
 	private Figure myFigure;
 	private boolean end;
 
-	public FSM_Node()
-	{
-		zero = null;
-		one = null;
-		myFigure = null;
-		end = false;
-	}
-
 	public FSM_Node(Figure figure)
 	{
 		zero = null;
