@@ -10,11 +10,11 @@ import CH.ifa.draw.framework.Connector;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.framework.FigureChangeEvent;
 import CH.ifa.draw.framework.Handle;
-import CH.ifa.draw.handle.PolyLineHandle;
 import CH.ifa.draw.locator.RelativeLocator;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.QuadCurve2D;
 import java.util.Vector;
 
 /**
@@ -116,34 +116,32 @@ public class ZeroConnection extends LineConnection
 	{
 		if(loop)
 		{
-			Rectangle r = displayBox();
-			Point centre = this.center();
-			int radius = r.height/2 - ARC_SIZE;
+			Rectangle r = fEnd.owner().displayBox();
+			Point centre = fEnd.owner().center();
+			int radius = r.height/2;
+
+			QuadCurve2D c = new QuadCurve2D.Float(centre.x - radius,
+			                                      centre.y,
+			                                      centre.x - radius*1.5f,
+			                                      centre.y - radius*3,
+			                                      centre.x,
+			                                      centre.y - radius);
+
+			Point p1 = new Point(centre.x - radius, centre.y);
+			Point p2 = new Point(p1.x + 7, p1.y - 15);
+			Point p3 = new Point(p1.x - 7, p1.y - 15);
+
+			Polygon triangle = new Polygon();
+			triangle.addPoint(p1.x, p1.y);
+			triangle.addPoint(p2.x, p2.y);
+			triangle.addPoint(p3.x, p3.y);
 
 			g.setColor(fFrameColor);
-			g.drawArc(r.x, r.y, r.width, r.height, 0, 180);
-			g.drawLine(centre.x + radius, centre.y, centre.x + radius + ARC_SIZE, centre.y);
-			draw_end_triangle(g, centre, radius);
-			return;
+			((Graphics2D) g).draw(c);
+			g.fillPolygon(triangle);
 		}
 		else
 			super.draw(g);
-	}
-
-	private void draw_end_triangle(Graphics g, Point centre, int radius)
-	{
-		Polygon triangle = new Polygon();
-		Point p1, p2, p3;
-
-		p1 = new Point(centre.x - radius, centre.y);
-		p2 = new Point(p1.x - ARC_SIZE + 20, p1.y + 5);
-		p3 = new Point(p1.x - ARC_SIZE + 20, p1.y - 5);
-
-		triangle.addPoint(p1.x, p1.y);
-		triangle.addPoint(p2.x, p2.y);
-		triangle.addPoint(p3.x, p3.y);
-		g.fillPolygon(triangle);
-		g.drawLine(p1.x, p1.y, p1.x - ARC_SIZE, p1.y);
 	}
 
 	@Override
@@ -151,10 +149,12 @@ public class ZeroConnection extends LineConnection
 	{
 		if(loop)
 		{
-			Rectangle r = fStart.owner().displayBox();
-			r.grow(ARC_SIZE, ARC_SIZE);
-			displaybox = r;
-			return displaybox;
+			Point centre = fEnd.owner().center();
+			Rectangle rect = new Rectangle(centre);
+
+			/* Black magic tuning*/
+			rect.add(centre.x - 37, centre.y - 58);
+			return rect;
 		}
 		else
 			return super.displayBox();
@@ -165,14 +165,12 @@ public class ZeroConnection extends LineConnection
 	{
 		if(loop)
 		{
-			Rectangle r = e.getInvalidatedRectangle();
-			Rectangle d = displayBox();
-			d.grow(5, 5);
-			r.add(d);
-			super.figureInvalidated(new FigureChangeEvent(e.getFigure(), r));
+			Rectangle rect = e.getInvalidatedRectangle();
+
+			rect.add(displayBox());
+			super.figureInvalidated(new FigureChangeEvent(e.getFigure(), rect));
 		}
-		else
-			super.figureInvalidated(e);
+		super.figureInvalidated(e);
 	}
 
 	@Override
@@ -182,6 +180,7 @@ public class ZeroConnection extends LineConnection
 		if(fStart.owner() == fEnd.owner())
 			loop = true;
 	}
+
 
 	/**
 	 * If true, the figure is selected :D \o/
@@ -193,27 +192,7 @@ public class ZeroConnection extends LineConnection
 	public boolean containsPoint(int x, int y)
 	{
 		if(loop)
-		{
-			Rectangle rect = new Rectangle(displayBox());
-			Ellipse2D elli = new Ellipse2D.Float(rect.x, rect.y, rect.width, rect.height);
-
-			rect.setBounds(rect.x, rect.y, rect.width, rect.height/2);
-
-			boolean r, e, i;
-
-			e = elli.contains(x, y);
-			r = rect.contains(x, y);
-			i = e && r;
-
-			/*
-			 * If the point is inside the state and inside
-			 * the arc returns false, otherwise return i
-			 */
-			if(fEnd.owner().displayBox().contains(x, y) && i)
-				return false;
-			else
-				return i;
-		}
+			return displayBox().contains(x, y);
 		else
 			return super.containsPoint(x, y);
 	}

@@ -6,12 +6,17 @@ import Automata.Model.FSM_Node;
 import CH.ifa.draw.figure.ArrowTip;
 import CH.ifa.draw.figure.TextFigure;
 import CH.ifa.draw.figure.connection.LineConnection;
+import CH.ifa.draw.framework.Connector;
 import CH.ifa.draw.framework.Figure;
+import CH.ifa.draw.framework.FigureChangeEvent;
 import CH.ifa.draw.framework.Handle;
 import CH.ifa.draw.handle.PolyLineHandle;
 import CH.ifa.draw.locator.RelativeLocator;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.QuadCurve2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
 /**
@@ -37,9 +42,14 @@ import java.util.Vector;
  */
 public class OneConnection extends LineConnection
 {
+	private final int ARC_SIZE = 30;
+	private Rectangle displaybox;
+	private boolean loop
+			;
 	public OneConnection()
 	{
 		super();
+		loop = false;
 		fFrameColor = Color.blue;
 		setStartDecoration(null);
 		setEndDecoration(new ArrowTip(0.4, 15, 15));
@@ -95,10 +105,100 @@ public class OneConnection extends LineConnection
 	@Override
 	public Vector<Handle> handles()
 	{
-		Vector<Handle> handles = new Vector<Handle>(fPoints.size());
-		handles.addElement(new WhiteNullHandler(this, RelativeLocator.center()));
-		for (int i = 1; i < fPoints.size() - 1; i++)
-			handles.addElement(new PolyLineHandle(this, locator(i), i));
-		return handles;
+		if(loop)
+		{
+			Vector<Handle> handles = new Vector<Handle>();
+			handles.addElement(new WhiteNullHandler(this, RelativeLocator.north()));
+			handles.addElement(new WhiteNullHandler(this, RelativeLocator.east()));
+			handles.addElement(new WhiteNullHandler(this, RelativeLocator.west()));
+			return handles;
+		}
+		else
+			return super.handles();
+	}
+
+	@Override
+	public void connectEnd(Connector end)
+	{
+		super.connectEnd(end);
+		if(fStart.owner() == fEnd.owner())
+			loop = true;
+	}
+
+	@Override
+	public void draw(Graphics g)
+	{
+		if(loop)
+		{
+			Rectangle r = fEnd.owner().displayBox();
+			Point centre = fEnd.owner().center();
+			int radius = r.height/2;
+
+			QuadCurve2D c = new QuadCurve2D.Float(centre.x + radius,
+			                                  centre.y,
+			                                  centre.x + radius*1.5f,
+			                                  centre.y - radius*3,
+			                                  centre.x,
+			                                  centre.y - radius);
+
+			Point p1 = new Point(centre.x + radius, centre.y);
+			Point p2 = new Point(p1.x + 7, p1.y - 15);
+			Point p3 = new Point(p1.x - 7, p1.y - 15);
+
+			Polygon triangle = new Polygon();
+			triangle.addPoint(p1.x, p1.y);
+			triangle.addPoint(p2.x, p2.y);
+			triangle.addPoint(p3.x, p3.y);
+
+			g.setColor(fFrameColor);
+			((Graphics2D) g).draw(c);
+			g.fillPolygon(triangle);
+		}
+		else
+			super.draw(g);
+	}
+
+	@Override
+	public Rectangle displayBox()
+	{
+		if(loop)
+		{
+			Point centre = fEnd.owner().center();
+			Rectangle rect = new Rectangle(centre);
+
+			/* Black magic tuning*/
+			rect.add(centre.x + 37, centre.y - 58);
+			return rect;
+		}
+		else
+			return super.displayBox();
+	}
+
+	@Override
+	public void figureInvalidated(FigureChangeEvent e)
+	{
+		if(loop)
+		{
+			Rectangle rect = e.getInvalidatedRectangle();
+
+			rect.add(displayBox());
+			super.figureInvalidated(new FigureChangeEvent(e.getFigure(), rect));
+		}
+		super.figureInvalidated(e);
+	}
+
+	/**
+	 * If true, the figure is selected :D \o/
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	@Override
+	public boolean containsPoint(int x, int y)
+	{
+		if(loop)
+			return displayBox().contains(x, y);
+		else
+			return super.containsPoint(x, y);
 	}
 }
