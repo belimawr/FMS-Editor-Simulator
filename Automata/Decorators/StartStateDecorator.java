@@ -1,5 +1,6 @@
 package Automata.Decorators;
 
+import Automata.Model.FSM_Model;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.framework.FigureChangeEvent;
 
@@ -31,6 +32,8 @@ public class StartStateDecorator extends AutomataDecorator
 	public StartStateDecorator(Figure figure)
 	{
 		super(figure);
+		/* Add model as listener*/
+		this.addFigureChangeListener(FSM_Model.getInstance());
 	}
 
 	@Override
@@ -86,10 +89,5 @@ public class StartStateDecorator extends AutomataDecorator
 		rect.add(p1);
 		rect.add(p2);
 		super.figureInvalidated(new FigureChangeEvent(e.getFigure(), rect));
-	}
-
-	public Figure getFigure()
-	{
-		return fComponent;
 	}
 }
