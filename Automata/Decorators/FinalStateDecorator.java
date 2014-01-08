@@ -26,8 +26,7 @@ import java.awt.*;
  * You should have received a copy of the GNU General Public License
  * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
-public class FinalStateDecorator
-		extends AutomataDecorator
+public class FinalStateDecorator extends AutomataDecorator
 {
 	public FinalStateDecorator(Figure figure)
 	{
