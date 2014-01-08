@@ -111,7 +111,7 @@ public class CountingFigureConnectorHandler extends ConnectionHandle
 	@Override
 	protected ConnectionFigure createConnection()
 	{
-		createdConnection =  (ConnectionFigure) super.createConnection();
+		createdConnection =  super.createConnection();
 		return createdConnection;
 	}
 }
