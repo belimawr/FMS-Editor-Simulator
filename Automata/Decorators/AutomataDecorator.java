@@ -40,10 +40,10 @@ public abstract class AutomataDecorator extends DecoratorFigure
 			parent = ((AutomataDecorator) figure).getParent();
 	}
 
-	private Figure get_fComponent()
-	{
-		return fComponent;
-	}
+//	private Figure get_fComponent()
+//	{
+//		return fComponent;
+//	}
 
 	private List<AutomataDecorator> getDecorators()
 	{
@@ -54,7 +54,7 @@ public abstract class AutomataDecorator extends DecoratorFigure
 		l.add(this);
 		while(current instanceof AutomataDecorator)
 		{
-			decorated = ((AutomataDecorator) current).get_fComponent();
+			decorated = ((AutomataDecorator) current).fComponent;
 			if(decorated instanceof AutomataDecorator)
 				l.add((AutomataDecorator) decorated);
 			current = decorated;
@@ -69,7 +69,6 @@ public abstract class AutomataDecorator extends DecoratorFigure
 		List<AutomataDecorator> decs = getDecorators();
 		for(AutomataDecorator d: decs)
 		{
-			System.out.println(d);
 			if(d instanceof FinalStateDecorator)
 				return (FinalStateDecorator) d;
 		}
@@ -88,19 +87,33 @@ public abstract class AutomataDecorator extends DecoratorFigure
 	@Override
 	public void decorate(Figure figure)
 	{
-		if(figure instanceof AutomataDecorator)
+		if(figure instanceof AutomataDecorator || figure instanceof CountingFigure)
 		{
-			super.decorate(figure);
+			if(figure instanceof AutomataDecorator)
+			{
+				super.decorate(figure);
+			}
+			else
+			{
+				parent = (CountingFigure) figure;
+				super.decorate(figure);
+			}
 		}
 		else
 		{
-			parent = (CountingFigure) figure;
-			super.decorate(figure);
+			throw new Automata_Exception(String.format(
+					"%s cannot be decorated by AutomataDecorator\n",
+					figure.getClass().toString()));
 		}
 	}
 
 	public CountingFigure getParent()
 	{
 		return parent;
+	}
+
+	public Figure getFigure()
+	{
+		return fComponent;
 	}
 }
