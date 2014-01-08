@@ -3,6 +3,7 @@ package Automata.Tools;
 import Automata.Decorators.AutomataDecorator;
 import Automata.Decorators.StartStateDecorator;
 import Automata.Exceptions.Automata_Exception;
+import Automata.Figures.CountingFigure;
 import Automata.Model.FSM_Model;
 import Automata.Model.FSM_Node;
 import CH.ifa.draw.framework.DrawingView;
@@ -64,13 +65,10 @@ public class StartDecoratorTool extends ActionTool
 			return;
 		}
 		/* Put the decorator */
-		else
+		else if(figure instanceof AutomataDecorator || figure instanceof CountingFigure)
 		{
 			Figure start = figure;
 			StartStateDecorator dec = new StartStateDecorator(figure);
-
-			/* Add the model as listener */
-			dec.addFigureChangeListener(FSM_Model.getInstance());
 			drawing().replace(figure, dec);
 
 			if(start instanceof AutomataDecorator)
