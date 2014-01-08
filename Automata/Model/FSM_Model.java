@@ -68,7 +68,7 @@ public class FSM_Model implements FigureChangeListener
 	 * and objects need to access the same data
 	 * structure.
 	 */
-	public static final FSM_Model me = new FSM_Model();
+	private static final FSM_Model me = new FSM_Model();
 
 	public FSM_Model()
 	{
@@ -164,7 +164,7 @@ public class FSM_Model implements FigureChangeListener
 	public void step()
 	{
 		view.freezeView();
-		String tape = tape_storage.getText();
+		tape_storage.getText();
 
 		if(selected != null)
 		{
@@ -198,7 +198,7 @@ public class FSM_Model implements FigureChangeListener
 				selected = dec;
 			}
 		}
-		if(tape.length() == 0 && current != null)
+		if(tape_storage.getText().length() == 0 && current != null)
 		{
 			drawing.remove(tape_storage);
 			view.checkDamage();
