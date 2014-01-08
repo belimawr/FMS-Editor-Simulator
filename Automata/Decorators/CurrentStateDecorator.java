@@ -8,23 +8,23 @@ import java.awt.*;
 /**
  * Author: Tiago de França Queiroz
  * Date: 04/01/14
- * <p/>
+ *
  * Copyright Tiago de França Queiroz, 2014.
- * <p/>
- * This file is part of Automata.Automata.Decorators.
- * <p/>
- * Automata.Automata.Decorators is free software: you can redistribute it and/or modify
+ *
+ * This file is part of Automata.
+ *
+ * Automata is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p/>
- * Automata.Automata.Decorators is distributed in the hope that it will be useful,
+ *
+ * Automata is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * <p/>
+ *
  * You should have received a copy of the GNU General Public License
- * along with Automata.Automata.Decorators. If not, see <http://www.gnu.org/licenses/>.
+ * along with Automata. If not, see <http://www.gnu.org/licenses/>.
  */
 public class CurrentStateDecorator extends AutomataDecorator
 {
@@ -36,7 +36,7 @@ public class CurrentStateDecorator extends AutomataDecorator
 	/*
 	 * Returns the atmosphere's size
 	 */
-	private Point atmosphere_size()
+	private Point border_size()
 	{
 		return new Point(6, 6);
 	}
@@ -45,7 +45,7 @@ public class CurrentStateDecorator extends AutomataDecorator
 	public Rectangle displayBox()
 	{
 		Rectangle r = fComponent.displayBox();
-		r.grow(atmosphere_size().x, atmosphere_size().y);
+		r.grow(border_size().x, border_size().y);
 
 		return r;
 	}
@@ -59,10 +59,10 @@ public class CurrentStateDecorator extends AutomataDecorator
 		Rectangle r = displayBox();
 
 		g.setColor(Color.white);
-		g.fillOval(r.x - atmosphere_size().x/2,
-		           r.y - atmosphere_size().y/2,
-		           r.width + atmosphere_size().x,
-		           r.height + atmosphere_size().y);
+		g.fillOval(r.x - border_size().x/2,
+		           r.y - border_size().y/2,
+		           r.width + border_size().x,
+		           r.height + border_size().y);
 		super.draw(g);
 	}
 
@@ -73,7 +73,7 @@ public class CurrentStateDecorator extends AutomataDecorator
 	public void figureInvalidated(FigureChangeEvent e)
 	{
 		Rectangle rect = e.getInvalidatedRectangle();
-		rect.grow(atmosphere_size().x, atmosphere_size().y);
+		rect.grow(border_size().x, border_size().y);
 		super.figureInvalidated(new FigureChangeEvent(e.getFigure(), rect));
 	}
 }
