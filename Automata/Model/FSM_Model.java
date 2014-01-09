@@ -202,6 +202,16 @@ public class FSM_Model implements FigureChangeListener
 		{
 			drawing.remove(tape_storage);
 			view.checkDamage();
+			if(current.isEnd())
+				JOptionPane.showMessageDialog((Component) view,
+				                              "FSM finished in an acceptance state",
+				                              "FSM Simulation",
+				                              JOptionPane.PLAIN_MESSAGE);
+			else
+				JOptionPane.showMessageDialog((Component) view,
+				                              "FSM did not finish in an acceptance state",
+				                              "FSM Simulation",
+				                              JOptionPane.PLAIN_MESSAGE);
 			current = null;
 		}
 		view.checkDamage();
