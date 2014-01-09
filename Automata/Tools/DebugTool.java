@@ -89,5 +89,10 @@ public class DebugTool extends SelectionTool
 		}
 		else
 			System.out.println("Figure is null!");
+
+		System.out.printf("FIGURES:\n");
+		Enumeration<Figure> ef = drawing().findFigure(x, y).figures();
+		while(ef.hasMoreElements())
+			System.out.println(ef.nextElement());
 	}
 }

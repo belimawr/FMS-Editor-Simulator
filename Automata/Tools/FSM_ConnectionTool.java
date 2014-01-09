@@ -1,6 +1,9 @@
 package Automata.Tools;
 
-import CH.ifa.draw.framework.*;
+import CH.ifa.draw.framework.ConnectionFigure;
+import CH.ifa.draw.framework.Drawing;
+import CH.ifa.draw.framework.DrawingView;
+import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.tool.ConnectionTool;
 
 /**

@@ -40,11 +40,6 @@ public abstract class AutomataDecorator extends DecoratorFigure
 			parent = ((AutomataDecorator) figure).getParent();
 	}
 
-//	private Figure get_fComponent()
-//	{
-//		return fComponent;
-//	}
-
 	private List<AutomataDecorator> getDecorators()
 	{
 		List<AutomataDecorator> l = new ArrayList<AutomataDecorator>();

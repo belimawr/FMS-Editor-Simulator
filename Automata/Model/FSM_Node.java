@@ -1,6 +1,5 @@
 package Automata.Model;
 
-import Automata.Figures.CountingFigure;
 import CH.ifa.draw.framework.Figure;
 
 /**

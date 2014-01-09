@@ -13,7 +13,6 @@ import CH.ifa.draw.framework.Handle;
 import CH.ifa.draw.locator.RelativeLocator;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.QuadCurve2D;
 import java.util.Vector;
 
@@ -40,8 +39,6 @@ import java.util.Vector;
  */
 public class ZeroConnection extends LineConnection
 {
-	private final int ARC_SIZE = 30;
-	private Rectangle displaybox;
 	private boolean loop;
 
 	public ZeroConnection()

@@ -1,11 +1,8 @@
 package Automata.Handlers;
 
-import CH.ifa.draw.framework.DrawingView;
 import CH.ifa.draw.framework.Figure;
 import CH.ifa.draw.framework.Locator;
-import CH.ifa.draw.handle.LocatorHandle;
 import CH.ifa.draw.handle.NullHandle;
-import CH.ifa.draw.locator.RelativeLocator;
 
 import java.awt.*;
 
