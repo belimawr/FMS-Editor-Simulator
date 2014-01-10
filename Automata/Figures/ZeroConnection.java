@@ -96,16 +96,17 @@ public class ZeroConnection extends LineConnection
 	@Override
 	public Vector<Handle> handles()
 	{
+		Vector<Handle> handles = new Vector<Handle>();
 		if(loop)
 		{
-			Vector<Handle> handles = new Vector<Handle>();
 			handles.addElement(new WhiteNullHandler(this, RelativeLocator.north()));
 			handles.addElement(new WhiteNullHandler(this, RelativeLocator.east()));
 			handles.addElement(new WhiteNullHandler(this, RelativeLocator.west()));
-			return handles;
 		}
 		else
-			return super.handles();
+			handles.addElement(new WhiteNullHandler(this, RelativeLocator.center()));
+
+		return handles;
 	}
 
 	@Override
