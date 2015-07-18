@@ -1,0 +1,8 @@
+FMS Editor & Simulator
+======================
+
+Finite State Machine (FMS) Editor & Simulator
+
+This is my FMS Simulator source code for CS409 Software Architecture and Design assessment
+at University of Strathclyde.
+It is based on Murray Woods modernised version of Java Hot Draw (JHD) (JHD_MIW2011.jar)
